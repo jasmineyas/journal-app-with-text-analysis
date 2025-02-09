@@ -25,6 +25,7 @@ public class JournalEntry {
         
     }
 
+    // Question: should this be calculated on the fly - or should this also be stored? 
     // REQUIRES: this.content not be null
     // MODIFIES: this
     // EFFECTS: analyze the content and produce various metrics
@@ -41,5 +42,7 @@ public class JournalEntry {
     public String getEntryPreview() { 
         return "first 30 words...";
     }
+
+
 
 }
