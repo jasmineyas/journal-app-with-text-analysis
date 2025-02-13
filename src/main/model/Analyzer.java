@@ -8,7 +8,8 @@ public class Analyzer {
 
     }
 
-    // TODO: REQUIRE/EFFECT/MODIFY? 
+    // TODO: REQUIRE/EFFECT/MODIFY? - just effect right? 
+    // EFFECT: calculate the overall mood given a journal entry ? 
     public String calculateOverallMood(JournalEntry entry){
         return "Happy";
     }
