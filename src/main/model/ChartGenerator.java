@@ -1,21 +1,24 @@
-package model;
+// *****
+// NOTE: This is just stub for now - will need to implement this in the future
+// commenting it out to reduce scope for phase 1 submission
+// find a Java chart library when we have a UI
+// *****
 
-import java.util.List;
-// stick with console line print for now 
-// find a Java chart library when we have a UI 
+// package model;
 
-public class ChartGenerator {
-    
-    // TODO: should this have a constructor class?
-    // this is a utility class  
+// import java.util.List;
 
-    // EFFECT: generate a bar chart using the given data 
-    public void generateBarChart(List<Double> data, String label){
-        
-    }
+// public class ChartGenerator {
 
-    // EFFECT: generate a donut chart using the given dat 
-    public void generateDonutChart(List<Double> data, String label) {
+// // this is a utility class
 
-    }
-}
+// // EFFECT: generate a bar chart using the given data
+// public void generateBarChart(List<Double> data, String label){
+
+// }
+
+// // EFFECT: generate a donut chart using the given dat
+// public void generateDonutChart(List<Double> data, String label) {
+
+// }
+// }

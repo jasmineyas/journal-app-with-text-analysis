@@ -1,77 +1,78 @@
 package model;
 
 import java.util.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 public class Analyzer {
-    // Analyzer analyzer;
+
     private static final String ALGORITHM_LOG = "data/algorithm_log.txt";
     private static final String MOOD_KEYWORDS = "data/mood_keywords.txt";
     private static final String PRIMARY_KEYWORDS = "data/primary_keywords.txt";
     private static final String TIME_ORIENTATION_KEYWORDS = "data/time_orientation.txt";
     private static final String US_AND_THEM_KEYWORDS = "data/us_and_them_keywords.txt";
 
-    // TODO: question - should Analyzer have instructor??  I just want it to be a helper class 
-    // public Analyzer(JournalEntry entry){
+    private Set<String> moodKeywords;
+    private Set<String> timeOrientationKeywords;
+    private Set<String> primaryKeywords;
+    private Set<String> usAndThemKeywords;
 
-    // }
+    public Analyzer() {
+        this.moodKeywords = loadKeywordsFromFile(MOOD_KEYWORDS);
+        this.timeOrientationKeywords = loadKeywordsFromFile(TIME_ORIENTATION_KEYWORDS);
+        this.primaryKeywords = loadKeywordsFromFile(PRIMARY_KEYWORDS);
+        this.usAndThemKeywords = loadKeywordsFromFile(US_AND_THEM_KEYWORDS);
+    }
 
+    // EFFECTS: return the version of the algorithm
     public int getVersion(){
         return 0;
     }
 
-    // EFFECT: update alogithm log with the latest VERSION number 
+    // EFFECTS: update alogithm log with the latest VERSION number 
     //         and update the date 
     public void updateAlgorithmLog(){
 
     }
 
+    // EFFECTS: return the last time the algorithm was updated
     public LocalDateTime getLastAlgorithmUpdateDate(){
         return LocalDateTime.now();
     }
 
-    // TODO: REQUIRE/EFFECT/MODIFY? - just effect right? 
-    // EFFECT: calculate the overall mood given a journal entry ? 
+    // EFFECTS: calculate the overall mood stats given a journal entry
     public String calculateOverallMood(JournalEntry entry){
         return "Happy";
     }
 
+    // EFFECTS: calculate the time orientation stats given a journal entry
     public String calculateTimeOrientation(JournalEntry entry) {
         return "Present";
     }
 
+    // EFFECTS: calculate the primary sense stats given a journal entry
     public String calculatePrimarySense(JournalEntry entry) {
         return "Sight";
     }
 
+    // EFFECTS: calculate the us and them stats given a journal entry
     public String calculateUsAndThem(JournalEntry entry) {
         return "Us";
     }
 
-    // TODO: maybe make this into a List<String> 
+    // EFFECTS: calculate the mindset stats while writing given a journal entry
     public List<String> calculateMindSetWhileWriting(JournalEntry entry) {
         return List.of("Introvert", "positive", "uncertain", "thinking");
     }
 
-    // load keywords below 
-    public Set<String> loadMoodKeywords(){
-        Set<String> moodKeywords = new HashSet<>();
-        return moodKeywords;
-    }
-    
-    public Set<String> loadPTimeOrientationKeywords() {
-        Set<String> timeOrientationKeywords = new HashSet<>();
-        return timeOrientationKeywords;
-    }
-
-    public Set<String> loadPrimaryKeywords() {
-        Set<String> primaryKeywords = new HashSet<>();
-        return primaryKeywords;
-    }
-
-    public Set<String> loadUsAndThemKeywords() {
-        Set<String> usAndThemKeywords = new HashSet<>();
-        return usAndThemKeywords;
+    // Helper method to load keywords from a file
+    // REQUIRES: the file path is valid
+    // EFFECTS: load keywords from a file and return a set of keywords
+    private Set<String> loadKeywordsFromFile(String filePath) {
+        Set<String> keywords = new HashSet<>();
+        return keywords;
     }
 
 
