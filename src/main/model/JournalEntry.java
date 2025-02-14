@@ -1,5 +1,6 @@
 package model;
 
+import java.util.*;
 import java.time.LocalDateTime;
 
 public class JournalEntry {
@@ -20,7 +21,7 @@ public class JournalEntry {
 
     // REQUIRES: this.content not be null 
     // MODIFIES: this 
-    // EFFECTS: edit the content 
+    // EFFECTS: edit the content and re-run analyzer 
     public void editContent(){
         
     }
@@ -29,12 +30,12 @@ public class JournalEntry {
     // REQUIRES: this.content not be null
     // MODIFIES: this
     // EFFECTS: analyze the content and produce various metrics
-    public String analyze() {
-        return "Overall Mood: happy" + "\n"
-                + "Mindset while writing: Introvert, positive, uncertain, thinking"
-                + "Time Orientation: Present" + "\n"
-                + "Primary Sense: Slight" + "\n"
-                + "Us and Them: They" + "\n";
+    public void analyze() {
+    }
+
+    // EFFECT: get text analysis results 
+    public List<String> getTextAnalysis(){
+
     }
 
     // REQUIRES: this.content not be null 
@@ -42,7 +43,6 @@ public class JournalEntry {
     public String getEntryPreview() { 
         return "first 30 words...";
     }
-
 
 
 }

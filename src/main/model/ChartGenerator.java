@@ -5,8 +5,7 @@ import java.util.List;
 // find a Java chart library when we have a UI 
 
 public class ChartGenerator {
-    ChartGenerator chartGenerator;
-
+    
     // TODO: should this have a constructor class?
     // this is a utility class  
 
