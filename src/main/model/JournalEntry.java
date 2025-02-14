@@ -11,12 +11,12 @@ public class JournalEntry {
     private String timeOrientation;
     private String primarySense;
     private String usAndThem;
-    private String mindsetWhileWriting;
+    // private String mindsetWhileWriting;
 
     // inspiration: https://750words.com
 
-    public JournalEntry(LocalDateTime dateTime, String content) {
-        this.dateTime = dateTime;
+    public JournalEntry(String content) {
+        this.dateTime = LocalDateTime.now();
         this.content = content;
         this.preview = createEntryPreview();
     }
@@ -24,7 +24,7 @@ public class JournalEntry {
     // REQUIRES: this.content not be null
     // MODIFIES: this
     // EFFECTS: edit the content and re-run analyzer
-    public void editContent() {
+    public void editContent(String newContent) {
 
     }
 
@@ -34,22 +34,11 @@ public class JournalEntry {
     public void analyze() {
     }
 
-    // EFFECT: get text analysis results for this entry
-    public HashMap<String, String> getTextAnalysis() {
-        HashMap<String, String> analysisMap = new HashMap<>();
-        analysisMap.put("Overall Mood", overallMood);
-        analysisMap.put("Mindset while writing", mindsetWhileWriting);
-        analysisMap.put("Time Orientation", timeOrientation);
-        analysisMap.put("Primary Sense", primarySense);
-        analysisMap.put("Us and Them", usAndThem);
-        return analysisMap;
-    }
-
     // REQUIRES: this.content not be null
-    // EFFECTS: create entry preview which is the first 30 
-    //          words of an entry
+    // EFFECTS: create entry preview which is the first 10 words 
+    //          of an entry followed by ... 
     public String createEntryPreview() {
-        return "first 30 words...";
+        return "Today I am feeling really happy. I will be going...";
     }
 
     // EFFECTS: Returns the preview of a journal entry
@@ -65,6 +54,33 @@ public class JournalEntry {
     // EFFECTS: Returns the content of a journal entry
     public String getContent() {
         return content;
+
     }
+
+    // EFFECTS: Returns the overall mood of a journal entry
+    public String getOverallMood() {
+        return overallMood;
+    }
+
+    // EFFECTS: Returns the time orientation of a journal entry
+    public String getTimeOrientation() {
+        return timeOrientation;
+    }
+
+    // EFFECTS: Returns primary sense of a journal entry
+    public String getPrimarySense() {
+        return primarySense;
+    }
+
+    // EFFECTS: Returns us and them of a journal entry
+    public String getUsAndThem() {
+        return usAndThem;
+    }
+
+    // TODO: leaving this method out for now - add it later 
+    // // EFFECTS: Returns mindset while writing of a journal entry
+    // public String getMindsetWhileWriting() {
+    //     return mindsetWhileWriting;
+    // }
 
 }
