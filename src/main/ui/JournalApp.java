@@ -10,8 +10,6 @@ public class JournalApp {
     private JournalApp journalApp;
     private JournalEntry currentEntry;
     private Scanner scanner;
-    private static final String APP_LOG = "data/app_log.txt";
-    private int APP_VERSION = 1;
 
     public JournalApp() {
         this.scanner = scanner;
@@ -77,26 +75,8 @@ public class JournalApp {
 
     }
 
-    // EFFECT: if the analyzer algorithm is updated,
-    // we re-run analyzer for all entries
-    private void reRunAnalyzer(Analyzer analyzer) {
-
+    public static void main(String[] args) throws Exception {
+        System.out.println("Welcome to my project!");
     }
-
-    // EFFECT: update the app version to the new version from
-    // algorithm log
-    private void updateAppLog(int newVersion) {
-
-    }
-
-    private LocalDateTime getLastAppUpdatedDate() {
-        return LocalDateTime.now();
-
-    }
-
-    private int getAppVersion() {
-        return 0;
-
-    }
-
+    
 }

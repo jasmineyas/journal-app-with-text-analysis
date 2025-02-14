@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 public class Analyzer {
 
-    private static final String ALGORITHM_LOG = "data/algorithm_log.txt";
     private static final String MOOD_KEYWORDS = "data/mood_keywords.txt";
     private static final String PRIMARY_KEYWORDS = "data/primary_keywords.txt";
     private static final String TIME_ORIENTATION_KEYWORDS = "data/time_orientation.txt";
@@ -24,22 +23,6 @@ public class Analyzer {
         this.timeOrientationKeywords = loadKeywordsFromFile(TIME_ORIENTATION_KEYWORDS);
         this.primaryKeywords = loadKeywordsFromFile(PRIMARY_KEYWORDS);
         this.usAndThemKeywords = loadKeywordsFromFile(US_AND_THEM_KEYWORDS);
-    }
-
-    // EFFECTS: return the version of the algorithm
-    public int getVersion(){
-        return 0;
-    }
-
-    // EFFECTS: update alogithm log with the latest VERSION number 
-    //         and update the date 
-    public void updateAlgorithmLog(){
-
-    }
-
-    // EFFECTS: return the last time the algorithm was updated
-    public LocalDateTime getLastAlgorithmUpdateDate(){
-        return LocalDateTime.now();
     }
 
     // EFFECTS: calculate the overall mood stats given a journal entry

@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public class JournalEntry {
     private LocalDateTime dateTime;
     private String content;
+    private String preview;
     private String overallMood;
     private String timeOrientation;
     private String primarySense;
@@ -17,6 +18,7 @@ public class JournalEntry {
     public JournalEntry(LocalDateTime dateTime, String content) {
         this.dateTime = dateTime;
         this.content = content;
+        this.preview = createEntryPreview();
     }
 
     // REQUIRES: this.content not be null
@@ -32,7 +34,7 @@ public class JournalEntry {
     public void analyze() {
     }
 
-    // EFFECT: get text analysis results
+    // EFFECT: get text analysis results for this entry
     public HashMap<String, String> getTextAnalysis() {
         HashMap<String, String> analysisMap = new HashMap<>();
         analysisMap.put("Overall Mood", overallMood);
@@ -44,9 +46,15 @@ public class JournalEntry {
     }
 
     // REQUIRES: this.content not be null
-    // EFFECTS: return the first 30 words of an entry
-    public String getEntryPreview() {
+    // EFFECTS: create entry preview which is the first 30 
+    //          words of an entry
+    public String createEntryPreview() {
         return "first 30 words...";
+    }
+
+    // EFFECTS: Returns the preview of a journal entry
+    public String getEntryPreview(){
+        return preview;
     }
 
     // EFFECTS: Returns the date of a journal entry
