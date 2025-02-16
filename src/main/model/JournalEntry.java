@@ -32,6 +32,7 @@ public class JournalEntry {
         this.content = content;
         this.preview = createEntryPreview();
         this.analyzer = new Analyzer();
+        analyze();
     }
 
     // REQUIRES: newContent not be empty

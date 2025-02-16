@@ -35,10 +35,10 @@ public class Analyzer {
      * them.txt - third person words
      */
 
-    private static final String MOOD_DIR = "data/mood/";
-    private static final String SENSE_DIR = "data/primary_sense/";
-    private static final String TIME_DIR = "data/time_orientation/";
-    private static final String US_THEM_DIR = "data/us_and_them/";
+    private static final String MOOD_DIR = "src/main/data/mood";
+    private static final String SENSE_DIR = "src/main/data/primary_sense";
+    private static final String TIME_DIR = "src/main/data/time_orientation";
+    private static final String US_THEM_DIR = "src/main/data/us_and_them";
 
     private Map<String, Set<String>> moodKeywords;
     private Map<String, Set<String>> timeKeywords;
@@ -113,9 +113,10 @@ public class Analyzer {
     // matching is case-insensitive
     // if no mathces found, returns map with zero counts
     public Map<String, Integer> countKeywordOccurrences(String content, Map<String, Set<String>> keywords) {
-        String lowerCaseContent = content.toLowerCase();
+        String[] contentWords = content.toLowerCase().split("\\W+");
 
         Map<String, Integer> keywordCount = new HashMap<>();
+
         for (String category : keywords.keySet()) {
             keywordCount.put(category, 0);
         }
@@ -124,12 +125,13 @@ public class Analyzer {
             String category = entry.getKey();
             Set<String> categoryKeywords = entry.getValue();
 
-            for (String keyword : categoryKeywords) {
-                if (lowerCaseContent.contains(keyword.toLowerCase())) {
+            for (String word : contentWords) {
+                if (categoryKeywords.contains(word.toLowerCase())) {
                     keywordCount.put(category, keywordCount.get(category) + 1);
                 }
             }
         }
+
         return keywordCount;
     }
 
@@ -162,7 +164,7 @@ public class Analyzer {
         return dominantCategory;
     }
 
-    // EFFECTS: analyze a journal entry and return the dominant 
+    // EFFECTS: analyze a journal entry and return the dominant
     // category for the metric of interest
     public String analyze(JournalEntry entry, Map<String, Set<String>> keywords) {
         String content = entry.getContent();

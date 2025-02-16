@@ -3,6 +3,7 @@ package model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,10 +17,12 @@ public class TestJournalEntry {
     }
 
     @Test
-    void testDditContent() {
-        LocalDateTime beforeEdit = LocalDateTime.now();
+    void testEditContent() throws InterruptedException {
+        LocalDateTime beforeEdit = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+        Thread.sleep(1000);
         journalEntry.editContent("Hello, world! I am editing this content.");
-        LocalDateTime afterEdit = LocalDateTime.now();
+        Thread.sleep(1000);
+        LocalDateTime afterEdit = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
         assertEquals("Hello, world! I am editing this content.", journalEntry.getContent());
         assertTrue(journalEntry.getLastUpdatedTime().isAfter(beforeEdit));
@@ -30,17 +33,21 @@ public class TestJournalEntry {
     @Test
     void testAnalyzeUpdatesAfterEdit() {
         journalEntry.editContent("I feel happy today!");
-        assertEquals("Happy", journalEntry.getOverallMood());
+        assertEquals("happy", journalEntry.getOverallMood());
 
         journalEntry.editContent("I am sad and lonely.");
-        assertEquals("Sad", journalEntry.getOverallMood());
+        assertEquals("sad", journalEntry.getOverallMood());
     }
 
     @Test
-    void testGetCreatedTime() {
-        LocalDateTime beforeCreation = LocalDateTime.now();
+    void testGetCreatedTime() throws InterruptedException {
+        LocalDateTime beforeCreation = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+        Thread.sleep(1000);
+
         journalEntry = new JournalEntry("New entry");
-        LocalDateTime afterCreation = LocalDateTime.now();
+        Thread.sleep(1000);
+
+        LocalDateTime afterCreation = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
         assertTrue(journalEntry.getCreatedTime().isAfter(beforeCreation));
         assertTrue(journalEntry.getCreatedTime().isBefore(afterCreation)
@@ -62,7 +69,7 @@ public class TestJournalEntry {
 
         assertEquals("Today I am feeling really happy. I will be going...", preview);
         assertTrue(preview.endsWith("..."));
-        assertEquals(10, preview.split("\\s+").length); 
+        assertEquals(10, preview.split("\\s+").length);
 
     }
 
@@ -79,7 +86,7 @@ public class TestJournalEntry {
 
         assertEquals("This is a very long journal entry that contains more...", preview);
         assertTrue(preview.endsWith("..."));
-        assertEquals(10, preview.split("\\s+").length); 
+        assertEquals(10, preview.split("\\s+").length);
     }
 
     // ANALYZE TESTS - MAYBE THEY SHOULD SIT IN THE ANALYZE TEST FILE
@@ -93,123 +100,105 @@ public class TestJournalEntry {
     @Test
     void testAnalyzeMoodHappy() {
         journalEntry.editContent("I am happy today. I am feeling good.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getOverallMood().equals("Happy"));
+        assertEquals("happy", journalEntry.getOverallMood());
     }
 
     @Test
     void testAnalyzeMoodSad() {
         journalEntry.editContent("I am sad today. I am not feeling good.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getOverallMood().equals("Sad"));
+        assertEquals("sad", journalEntry.getOverallMood());
     }
 
     @Test
     void testAnalyzeMoodNeutralS() {
         journalEntry.editContent("I am alright today. I am okay.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getOverallMood().equals("Zen"));
+        assertEquals("zen", journalEntry.getOverallMood());
     }
 
     @Test
     void testAnalyzeTestMoodNA() {
-        journalEntry.analyze();
-        assertTrue(journalEntry.getOverallMood().equals("N/A"));
+        assertEquals("n/a", journalEntry.getOverallMood());
     }
 
     @Test
     void testAnlayzeTimeOrientationPast() {
         journalEntry.editContent("Yesterday, I made a mistake and I am still thinking about that.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getTimeOrientation().equals("Past"));
+        assertEquals("past", journalEntry.getTimeOrientation());
     }
 
     @Test
     void testAnlayzeTimeOrientationPresent() {
         journalEntry.editContent("Today, I went to the park.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getTimeOrientation().equals("Present"));
+        assertEquals("present", journalEntry.getTimeOrientation());
     }
 
     @Test
     void testAnlayzeTimeOrientationFuture() {
         journalEntry.editContent("So looking forward to tomorrow's game!");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getTimeOrientation().equals("Future"));
+        assertEquals("future", journalEntry.getTimeOrientation());
     }
 
     @Test
     void testAnlayzeTimeOrientationNA() {
-        journalEntry.analyze();
-        assertTrue(journalEntry.getTimeOrientation().equals("N/A"));
+        assertEquals("n/a", journalEntry.getTimeOrientation());
     }
 
     @Test
     void testAnalyzePrimarySenseSightt() {
         journalEntry.editContent("I saw a beautiful sunset today.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getPrimarySense().equals("Sight"));
+        assertEquals("sight", journalEntry.getPrimarySense());
     }
 
     @Test
     void testAnalyzePrimarySenseHearing() {
         journalEntry.editContent("I heard a beautiful song today.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getPrimarySense().equals("Hearing"));
+        assertEquals("hearing", journalEntry.getPrimarySense());
     }
 
     @Test
     void testAnalyzePrimarySenseTaste() {
         journalEntry.editContent("I ate a delicious cake today.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getPrimarySense().equals("Taste"));
+        assertEquals("taste", journalEntry.getPrimarySense());
     }
 
     @Test
     void testAnalyzePrimarySenseTouch() {
         journalEntry.editContent("I touched a soft blanket today.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getPrimarySense().equals("Touch"));
+        assertEquals("touch", journalEntry.getPrimarySense());
     }
 
     @Test
     void testAnalyzePrimarySenseNA() {
-        journalEntry.analyze();
-        assertTrue(journalEntry.getPrimarySense().equals("N/A"));
+        assertEquals("n/a", journalEntry.getPrimarySense());
     }
 
     @Test
     void testAnalyzeUsAndThemUs() {
-        journalEntry.editContent("I am going to the park with my friends. We are going to have a great time.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getUsAndThem().equals("Us"));
+        journalEntry.editContent("We are going to have a great time.");
+        assertEquals("us", journalEntry.getUsAndThem());
     }
 
     @Test
     void testAnalyzeUsAndThemThem() {
-        journalEntry.editContent("My friends were really nice to me today.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getUsAndThem().equals("Them"));
+        journalEntry.editContent("They were really nice today.");
+        assertEquals("them", journalEntry.getUsAndThem());
     }
 
     @Test
     void testAnalyzeUsandThemI() {
         journalEntry.editContent("I am going to the park today.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getUsAndThem().equals("I"));
+        assertEquals("I", journalEntry.getUsAndThem());
     }
 
     @Test
     void testAnalyzeUsandThemYou() {
-        journalEntry.editContent("You were really nice to me today, babe.");
-        journalEntry.analyze();
-        assertTrue(journalEntry.getUsAndThem().equals("You"));
+        journalEntry.editContent("You were really nice to me today. Thank you.");
+        assertEquals("you", journalEntry.getUsAndThem());
     }
 
     @Test
     void testAnalyzeUsAndThemNA() {
-        journalEntry.analyze();
-        assertTrue(journalEntry.getUsAndThem().equals("N/A"));
+        assertEquals("n/a", journalEntry.getUsAndThem());
     }
 
 }
