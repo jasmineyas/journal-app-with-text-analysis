@@ -1,6 +1,9 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.util.*;
+
+import exceptions.emptyContent;
 
 /**
  * JournalEntry class represents a single journal entry with content and
@@ -18,15 +21,20 @@ public class JournalEntry {
     private String timeOrientation;
     private String primarySense;
     private String usAndThem;
+    private Analyzer analyzer;
     // private String mindsetWhileWriting;
 
     // inspiration: https://750words.com
 
-    public JournalEntry(String content) {
+    public JournalEntry(String content) throws emptyContent {
+        // if (content == null || content.trim().isEmpty()) {
+        // throw new emptyContent();
+        // }
         this.createdTime = LocalDateTime.now();
         this.lastUpdatedTime = LocalDateTime.now();
         this.content = content;
         this.preview = createEntryPreview();
+        this.analyzer = new Analyzer();
     }
 
     // REQUIRES: newContent not be empty
@@ -36,18 +44,40 @@ public class JournalEntry {
     // update preview
     // re-run analyzer
     public void editContent(String newContent) {
-
+        this.content = newContent;
+        this.lastUpdatedTime = LocalDateTime.now();
+        this.preview = createEntryPreview();
+        analyze();
     }
 
     // MODIFIES: this
     // EFFECTS: analyze the content and produce various metrics
     public void analyze() {
+        analyzer.countKeywordOccurrences(this.content, analyzer.getMoodCategories());
+        analyzer.countKeywordOccurrences(this.content, analyzer.getTimeCategories());
+        analyzer.countKeywordOccurrences(this.content, analyzer.getSenseCategories());
+        analyzer.countKeywordOccurrences(this.content, analyzer.getUsThemCategories());
     }
 
     // EFFECTS: create entry preview which is the first 10 words
     // of an entry followed by ...
     public String createEntryPreview() {
-        return "Today I am feeling really happy. I will be going...";
+        ArrayList<String> text = new ArrayList<>(List.of(content.split("\\s+")));
+
+        if (text.size() <= 10) {
+            return content;
+        }
+
+        StringBuilder preview = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            preview.append(text.get(i));
+            if (i < 9) {
+                preview.append(" ");
+            }
+        }
+        preview.append("...");
+
+        return preview.toString();
     }
 
     // EFFECTS: Returns the preview of a journal entry
@@ -73,7 +103,6 @@ public class JournalEntry {
     // EFFECTS: Returns the content of a journal entry
     public String getContent() {
         return content;
-
     }
 
     // EFFECTS: Returns the overall mood of a journal entry
