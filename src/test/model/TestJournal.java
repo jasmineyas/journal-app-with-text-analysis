@@ -1,7 +1,6 @@
 package model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -27,13 +26,13 @@ public class TestJournal {
     }
 
     @Test
-    void createNewEntryTestOnce() {
+    void testCreateNewEntryOnce() {
         assertTrue(journal.createNewEntry(entry));
         assertEquals(1, journal.getNumberOfEntries());
     }
 
     @Test
-    void createNewEntryTestTwice() {
+    void testCreateNewEntryTwice() {
         assertTrue(journal.createNewEntry(entry));
         assertTrue(journal.createNewEntry(entry2));
         assertEquals(2, journal.getNumberOfEntries());
@@ -41,48 +40,58 @@ public class TestJournal {
     }
 
     @Test 
-    void updateEntryTest() {
+    void testUpdateEntry() {
         journal.createNewEntry(entry);
         journal.updateEntry(entry, "Hello, world! I am editing this content.");
         assertEquals("Hello, world! I am editing this content.", entry.getContent());
     }
 
     @Test 
-    void deleteEntryByDateTimeTest() {
+    void testDeleteEntryByDateTime() {
         journal.createNewEntry(entry);
-        journal.createNewEntry(entry)
+        journal.createNewEntry(entry);
         assertTrue(journal.deleteEntry(entry.getCreatedTime()));
         assertEquals(1, journal.getNumberOfEntries());
 
     }
 
     @Test
-    void deleteEntryByDateTimeStringTest() {
+    void testDeleteEntryByDateTimeString() {
         journal.createNewEntry(entry);
         assertTrue(journal.deleteEntry(journal.formatDateTime(entry.getCreatedTime())));
         assertEquals(0, journal.getNumberOfEntries());
     }
 
     @Test
-    void getEntryByDateTimeTest() {
+    void testDeleteNonExistentEntry() {
+        assertFalse(journal.deleteEntry(LocalDateTime.now()));
+    }
+
+    @Test
+    void testDeleteNonExistentEntryString() {
+        assertFalse(journal.deleteEntry(journal.formatDateTime(LocalDateTime.now())));
+    }
+
+    @Test
+    void testGetEntryByDateTime() {
         journal.createNewEntry(entry);
         assertEquals(entry, journal.getEntry(entry.getCreatedTime()));
     }
 
     @Test
-    void getEntryByDateTimeStringTest() {
+    void testGetEntryByDateTimeStringTest() {
         journal.createNewEntry(entry);
         assertEquals(entry, journal.getEntry(journal.formatDateTime(entry.getCreatedTime())));
     }
 
     @Test 
-    void formatDateTimeTest() {
+    void testFormatDateTime() {
         LocalDateTime dateTime = LocalDateTime.of(2025, 2, 16, 10, 00, 00);
         assertEquals(dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), journal.formatDateTime(dateTime));
     }
 
     @Test 
-    void getAllEntriesFormattedTest() {
+    void testGetAllEntriesFormatted() {
         journal.createNewEntry(entry);
         journal.createNewEntry(entry2);
         LocalDateTime dateTime1 = entry.getCreatedTime();

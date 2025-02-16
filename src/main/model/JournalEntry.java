@@ -2,6 +2,12 @@ package model;
 
 import java.time.LocalDateTime;
 
+/**
+ * JournalEntry class represents a single journal entry with content and
+ * analysis metrics.
+ * Each entry tracks creation time, updates, and various text analyses.
+ */
+
 public class JournalEntry {
     private LocalDateTime createdTime;
     private LocalDateTime lastUpdatedTime;
@@ -18,34 +24,40 @@ public class JournalEntry {
 
     public JournalEntry(String content) {
         this.createdTime = LocalDateTime.now();
+        this.lastUpdatedTime = LocalDateTime.now();
         this.content = content;
         this.preview = createEntryPreview();
     }
 
-    // REQUIRES: this.content not be null
+    // REQUIRES: newContent not be empty
     // MODIFIES: this
-    // EFFECTS: edit the content, update the lastUpdatedTime 
-    //          and re-run analyzer
+    // EFFECTS: update the content,
+    // update the lastUpdatedTime
+    // update preview
+    // re-run analyzer
     public void editContent(String newContent) {
 
     }
 
-    // REQUIRES: this.content not be null
     // MODIFIES: this
     // EFFECTS: analyze the content and produce various metrics
     public void analyze() {
     }
 
-    // REQUIRES: this.content not be null
-    // EFFECTS: create entry preview which is the first 10 words 
-    //          of an entry followed by ... 
+    // EFFECTS: create entry preview which is the first 10 words
+    // of an entry followed by ...
     public String createEntryPreview() {
         return "Today I am feeling really happy. I will be going...";
     }
 
     // EFFECTS: Returns the preview of a journal entry
-    public String getEntryPreview(){
+    public String getEntryPreview() {
         return preview;
+    }
+
+    // EFFECTS: Returns the word count of a journal entry
+    public int getWordCount() {
+        return content.isEmpty() ? 0 : content.split("\\s+").length;
     }
 
     // EFFECTS: Returns the created date of a journal entry
@@ -84,10 +96,10 @@ public class JournalEntry {
         return usAndThem;
     }
 
-    // TODO: leaving this method out for now - add it later 
+    // TODO: leaving this method out for now - add it later
     // // EFFECTS: Returns mindset while writing of a journal entry
     // public String getMindsetWhileWriting() {
-    //     return mindsetWhileWriting;
+    // return mindsetWhileWriting;
     // }
 
 }
