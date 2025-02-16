@@ -4,7 +4,8 @@ import java.util.*;
 import java.time.LocalDateTime;
 
 public class JournalEntry {
-    private LocalDateTime dateTime;
+    private LocalDateTime createdTime;
+    private LocalDateTime lastUpdatedTime;
     private String content;
     private String preview;
     private String overallMood;
@@ -16,14 +17,15 @@ public class JournalEntry {
     // inspiration: https://750words.com
 
     public JournalEntry(String content) {
-        this.dateTime = LocalDateTime.now();
+        this.createdTime = LocalDateTime.now();
         this.content = content;
         this.preview = createEntryPreview();
     }
 
     // REQUIRES: this.content not be null
     // MODIFIES: this
-    // EFFECTS: edit the content and re-run analyzer
+    // EFFECTS: edit the content, update the lastUpdatedTime 
+    //          and re-run analyzer
     public void editContent(String newContent) {
 
     }
@@ -46,9 +48,14 @@ public class JournalEntry {
         return preview;
     }
 
-    // EFFECTS: Returns the date of a journal entry
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    // EFFECTS: Returns the created date of a journal entry
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    // EFFECTS: Returns the last updated date of a journal entry
+    public LocalDateTime getLastUpdatedTime() {
+        return lastUpdatedTime;
     }
 
     // EFFECTS: Returns the content of a journal entry

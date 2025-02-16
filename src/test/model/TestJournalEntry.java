@@ -1,5 +1,6 @@
 package model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
@@ -17,8 +18,24 @@ public class TestJournalEntry {
 
     @Test
     void editContentTest() {
+        LocalDateTime beforeEdit = LocalDateTime.now();
         journalEntry.editContent("Hello, world! I am editing this content.");
-        assertTrue(journalEntry.getContent().equals("Hello, world! I am editing this content."));
+        LocalDateTime afterEdit = LocalDateTime.now();
+
+        assertEquals("Hello, world! I am editing this content.", journalEntry.getContent());
+        assertTrue(journalEntry.getLastUpdatedTime().isAfter(beforeEdit));
+        assertTrue(journalEntry.getLastUpdatedTime().isBefore(afterEdit) || journalEntry.getLastUpdatedTime().isEqual(afterEdit));
+    }
+
+    @Test
+    void getCreatedTimeTest() {
+        LocalDateTime beforeCreation = LocalDateTime.now();
+        journalEntry = new JournalEntry("New entry");
+        LocalDateTime afterCreation = LocalDateTime.now();
+
+        assertTrue(journalEntry.getCreatedTime().isAfter(beforeCreation));
+        assertTrue(journalEntry.getCreatedTime().isBefore(afterCreation)
+                || journalEntry.getCreatedTime().isEqual(afterCreation));
     }
 
     @Test
