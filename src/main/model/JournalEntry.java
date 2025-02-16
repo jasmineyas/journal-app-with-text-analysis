@@ -1,11 +1,11 @@
 package model;
 
-import java.util.*;
 import java.time.LocalDateTime;
 
 public class JournalEntry {
     private LocalDateTime createdTime;
     private LocalDateTime lastUpdatedTime;
+
     private String content;
     private String preview;
     private String overallMood;

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TestJournalEntry {
-    JournalEntry journalEntry;
+    private JournalEntry journalEntry;
 
     @BeforeEach
     void runBefore() {
