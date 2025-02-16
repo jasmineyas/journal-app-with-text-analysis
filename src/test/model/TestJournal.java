@@ -15,10 +15,12 @@ public class TestJournal {
     private JournalEntry entry3;
 
     @BeforeEach
-    void runBefore() {
+    void runBefore() throws InterruptedException {
         journal = new Journal();
         entry = new JournalEntry("Hello, world!");
+        Thread.sleep(1000);
         entry2 = new JournalEntry("Hello, new world!");
+        Thread.sleep(1000);
         entry3 = new JournalEntry("Today I am feeling really happy."+  
                                 "I will be going to the park with my friends. " +
                                 "We are going to have a great time. I am a bit"+
@@ -48,11 +50,10 @@ public class TestJournal {
 
     @Test 
     void testDeleteEntryByDateTime() {
-        journal.createNewEntry(entry);
-        journal.createNewEntry(entry);
+        assertTrue(journal.createNewEntry(entry));
+        assertTrue(journal.createNewEntry(entry2));
         assertTrue(journal.deleteEntry(entry.getCreatedTime()));
         assertEquals(1, journal.getNumberOfEntries());
-
     }
 
     @Test
@@ -81,7 +82,11 @@ public class TestJournal {
     @Test
     void testGetEntryByDateTimeStringTest() {
         journal.createNewEntry(entry);
-        assertEquals(entry, journal.getEntry(journal.formatDateTime(entry.getCreatedTime())));
+        String formattedTime = journal.formatDateTime(entry.getCreatedTime());
+        System.out.println("Formatted time: " + formattedTime);
+        System.out.println("ORiginal: " + entry.getCreatedTime());
+        JournalEntry retrievedEntry = journal.getEntry(formattedTime);
+        assertEquals(entry, retrievedEntry);
     }
 
     @Test 
@@ -100,7 +105,7 @@ public class TestJournal {
         String dateTime2Formatted = journal.formatDateTime(dateTime2);
         String expected = dateTime1Formatted + " - " + entry.getEntryPreview() + "\n" +
                           dateTime2Formatted + " - " + entry2.getEntryPreview() + "\n";
-        assertEquals(expected, journal.getAllEntriesFormatted());
+        assertEquals(expected, journal.formatAllEntries());
     }
 
 

@@ -1,9 +1,8 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
-
-import exceptions.emptyContent;
 
 /**
  * JournalEntry class represents a single journal entry with content and
@@ -26,12 +25,10 @@ public class JournalEntry {
 
     // inspiration: https://750words.com
 
-    public JournalEntry(String content) throws emptyContent {
-        // if (content == null || content.trim().isEmpty()) {
-        // throw new emptyContent();
-        // }
-        this.createdTime = LocalDateTime.now();
-        this.lastUpdatedTime = LocalDateTime.now();
+    // TODO: think about empty content - what to do with it?
+    public JournalEntry(String content) {
+        this.createdTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+        this.lastUpdatedTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
         this.content = content;
         this.preview = createEntryPreview();
         this.analyzer = new Analyzer();
@@ -45,7 +42,7 @@ public class JournalEntry {
     // re-run analyzer
     public void editContent(String newContent) {
         this.content = newContent;
-        this.lastUpdatedTime = LocalDateTime.now();
+        this.lastUpdatedTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
         this.preview = createEntryPreview();
         analyze();
     }
@@ -53,17 +50,16 @@ public class JournalEntry {
     // MODIFIES: this
     // EFFECTS: analyze the content and produce various metrics
     public void analyze() {
-        analyzer.countKeywordOccurrences(this.content, analyzer.getMoodCategories());
-        analyzer.countKeywordOccurrences(this.content, analyzer.getTimeCategories());
-        analyzer.countKeywordOccurrences(this.content, analyzer.getSenseCategories());
-        analyzer.countKeywordOccurrences(this.content, analyzer.getUsThemCategories());
+        overallMood = analyzer.analyze(this, analyzer.getMoodCategories());
+        timeOrientation = analyzer.analyze(this, analyzer.getTimeCategories());
+        primarySense = analyzer.analyze(this, analyzer.getSenseCategories());
+        usAndThem = analyzer.analyze(this, analyzer.getUsThemCategories());
     }
 
     // EFFECTS: create entry preview which is the first 10 words
     // of an entry followed by ...
     public String createEntryPreview() {
         ArrayList<String> text = new ArrayList<>(List.of(content.split("\\s+")));
-
         if (text.size() <= 10) {
             return content;
         }
@@ -75,6 +71,7 @@ public class JournalEntry {
                 preview.append(" ");
             }
         }
+
         preview.append("...");
 
         return preview.toString();

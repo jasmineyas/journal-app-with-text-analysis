@@ -53,14 +53,17 @@ public class Journal {
 
     // TODO: I don't care about last updated date yet - could add in the future
     // EFFECTS: Returns all entries formatted in date time - entry preview format
-    public List<String> formatAllEntries() {
-        List<String> entries = new ArrayList<>();
+    public String formatAllEntries() {
+       StringBuilder entries = new StringBuilder();
         for (LocalDateTime dateTime : journalEntries.keySet()) {
             JournalEntry entry = journalEntries.get(dateTime);
             String formattedDateTime = formatDateTime(dateTime);
-            entries.add(formattedDateTime + " - " + entry.getEntryPreview());
+            entries.append(formattedDateTime);
+            entries.append(" - ");
+            entries.append(entry.getEntryPreview());
+            entries.append("\n");
         }
-        return entries;
+        return entries.toString();
     }
 
     // REQUIRES: this entry is in the journal or data folder

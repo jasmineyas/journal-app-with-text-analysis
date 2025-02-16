@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestAnalyzer {
     private Analyzer analyzer;
-    private static final String TEST_MOOD_DIR = "testdata/mood/";
+    private static final String TEST_MOOD_DIR = "src/main/testdata/mood";
     private Map<String, Set<String>> testHappyKeywords;
     private Map<String, Set<String>> testSadKeywords;
 
@@ -23,7 +23,7 @@ public class TestAnalyzer {
 
     @Test
     void testLoadKeywordsMap() {
-        Map<String, Set<String>> moodKeywords = analyzer.loadKeywordsMap(TEST_MOOD_DIR);
+        Map<String, Set<String>> moodKeywords = analyzer.getMoodCategories();
         assertEquals(2, moodKeywords.size());
 
         assertTrue(moodKeywords.containsKey("happy"));
@@ -39,7 +39,7 @@ public class TestAnalyzer {
 
     @Test
     void testReadKeywordsFromFile() {
-        Set<String> keywords = analyzer.readKeywordsFromFile(TEST_MOOD_DIR + "happy.txt");
+        Set<String> keywords = analyzer.readKeywordsFromFile(TEST_MOOD_DIR + "/happy.txt");
         assertEquals(3, keywords.size());
         assertTrue(keywords.contains("joy"));
         assertTrue(keywords.contains("excited"));
@@ -50,29 +50,21 @@ public class TestAnalyzer {
     void testCountKeywordOccurrences() {
         Map<String, Integer> keywordCount = analyzer.countKeywordOccurrences("I am so happy and excited today!",
                 testHappyKeywords);
-        assertEquals(3, keywordCount.size());
-        assertEquals(1, keywordCount.get("joy"));
-        assertEquals(1, keywordCount.get("happy"));
-        assertEquals(1, keywordCount.get("excited"));
+        assertEquals(2, keywordCount.get("happy"));
     }
 
     @Test
     void testCountKeywordOccurrencesNoMatch() {
         Map<String, Integer> keywordCount = analyzer.countKeywordOccurrences("I am so sad and lonely today!",
                 testHappyKeywords);
-        assertEquals(3, keywordCount.size());
-        assertEquals(0, keywordCount.get("joy"));
         assertEquals(0, keywordCount.get("happy"));
-        assertEquals(0, keywordCount.get("excited"));
     }
 
     @Test
     void testCountKeywordCaseInsensitive() {
         Map<String, Integer> counts = analyzer.countKeywordOccurrences(
                 "I am HAPPY and feeling joy, so Excited!", testHappyKeywords);
-        assertEquals(1, counts.get("happy"));
-        assertEquals(1, counts.get("joy"));
-        assertEquals(1, counts.get("excited"));
+        assertEquals(3, counts.get("happy"));
     }
 
     @Test

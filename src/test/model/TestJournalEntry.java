@@ -62,7 +62,7 @@ public class TestJournalEntry {
 
         assertEquals("Today I am feeling really happy. I will be going...", preview);
         assertTrue(preview.endsWith("..."));
-        assertEquals(10, preview.split("\\s+").length - 1); // -1 for the "..."
+        assertEquals(10, preview.split("\\s+").length); 
 
     }
 
@@ -77,9 +77,9 @@ public class TestJournalEntry {
         JournalEntry longEntry = new JournalEntry(longContent);
         String preview = longEntry.getEntryPreview();
 
-        assertEquals("This is a very long journal entry that contains...", preview);
+        assertEquals("This is a very long journal entry that contains more...", preview);
         assertTrue(preview.endsWith("..."));
-        assertEquals(10, preview.split("\\s+").length - 1); // -1 for the "..."
+        assertEquals(10, preview.split("\\s+").length); 
     }
 
     // ANALYZE TESTS - MAYBE THEY SHOULD SIT IN THE ANALYZE TEST FILE
