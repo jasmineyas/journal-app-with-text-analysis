@@ -35,47 +35,49 @@ public class JournalApp {
             System.out.print("Enter command: ");
             String input = scanner.nextLine().trim();
             String[] parts = input.split(" ", 2);
-            String command = parts[0].toLowerCase();
-
             try {
-                switch (command) {
-                    case "create":
-                        if (parts.length > 1) {
-                            System.out.println("Invalid command. Please only type 'create' to create a new entry.");
-                        } else
-                            createEntry();
-                        break;
-                    case "view":
-                    case "edit":
-                    case "delete":
-                        handleDateBasedCommand(parts, command);
-                        break;
-                    case "list":
-                        listEntries();
-                        break;
-                    case "quit":
-                        if (input.trim().equalsIgnoreCase("quit")) {
-                            running = false;
-                        } else {
-                            System.out.println("Invalid command. Did you intend to quit? please use 'quit' to exit.");
-                        }
-                        break;
-                    default:
-                        System.out.println("Invalid command. Please try again.");
-                }
+                running = processCommand(input, parts);
             } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please use: " + DATE_FORMAT);
+                System.out.println("Invalid date format. Please use: " + DATE_FORMAT + ")");
             }
         }
+
     }
 
     // below are all the helper functions for the handleUserInput
+
+    private boolean processCommand(String input, String[] parts) {
+        String command = parts[0].toLowerCase();
+
+        switch (command) {
+            case "create":
+                if (parts.length > 1) {
+                    System.out.println("Invalid command. Please only type 'create' to create a new entry.");
+                } else {
+                    createEntry();
+                }
+                return true;
+            case "view":
+            case "edit":
+            case "delete":
+                handleDateBasedCommand(parts, command);
+                return true;
+            case "list":
+                handleListCommand(input);
+                return true;
+            case "quit":
+                return handleQuitCommand(input);
+            default:
+                System.out.println("Invalid command. Please try again.");
+                return true;
+        }
+    }
 
     // EFFECTS: handles commands that require a date parameter, displays error if
     // date is missing
     private void handleDateBasedCommand(String[] parts, String command) {
         if (parts.length < 2) {
-            System.out.println("Please provide a date (format: " + DATE_FORMAT);
+            System.out.println("Please provide a date (format: " + DATE_FORMAT + ")");
         } else {
             switch (command) {
                 case "view":
@@ -91,7 +93,8 @@ public class JournalApp {
         }
     }
 
-    // EFFECT: display the entry user specificed with a date
+    // EFFECT: display the journal entry and its text analysis specififed by the
+    // user specificed date
     private void viewEntry(String dateString) {
         JournalEntry entry = journal.getEntry(dateString);
         if (entry == null) {
@@ -102,9 +105,9 @@ public class JournalApp {
         System.out.println("\n=== Journal Entry ===");
         System.out.println("Created: " + journal.formatDateTime(entry.getCreatedTime()));
         System.out.println("Last Updated: " + journal.formatDateTime(entry.getLastUpdatedTime()));
-        System.out.println("\nContent:");
+        System.out.println("\n💭 Content:");
         System.out.println(entry.getContent());
-        System.out.println("\nAnalysis:");
+        System.out.println("\n💡 Analysis:");
         System.out.println("Word Count: " + entry.getWordCount());
         System.out.println("Overall Mood: " + entry.getOverallMood());
         System.out.println("Time Orientation: " + entry.getTimeOrientation());
@@ -112,8 +115,7 @@ public class JournalApp {
         System.out.println("Perspective: " + entry.getUsAndThem());
     }
 
-    // EFFECT: interact with the user
-    // allow the user to edit the entry
+    // EFFECT: allow the user to edit the entry if it exists
     private void editEntry(String dateString) {
         JournalEntry entry = journal.getEntry(dateString);
         if (entry == null) {
@@ -133,7 +135,7 @@ public class JournalApp {
 
         journal.updateEntry(entry, newContent.toString().trim());
         System.out.println("\nEntry updated successfully.");
-        System.out.println("\nUpdated analysis:");
+        System.out.println("\n🆕 Updated analysis:");
         System.out.println("Word Count: " + entry.getWordCount());
         System.out.println("Overall Mood: " + entry.getOverallMood());
         System.out.println("Time Orientation: " + entry.getTimeOrientation());
@@ -156,8 +158,8 @@ public class JournalApp {
         }
     }
 
-    // EFFECT: interacct with the user
-    // delete the entry user specified
+    // EFFECT: delete the entry user specified only if the entry exists in the
+    // journal
     private void deleteEntry(String dateString) {
         JournalEntry entry = journal.getEntry(dateString);
         if (entry == null) {
@@ -176,6 +178,15 @@ public class JournalApp {
         }
     }
 
+    // EFFECT: check the input command
+    private void handleListCommand(String input) {
+        if (input.trim().equalsIgnoreCase("list")) {
+            listEntries();
+        } else {
+            System.out.println("Invalid command. Please only type 'list' to list all entries.");
+        }
+    }
+
     // EFFECT: loads and displays all the entries
     private void listEntries() {
         if (journal.getNumberOfEntries() == 0) {
@@ -186,6 +197,16 @@ public class JournalApp {
         System.out.println("\n=== All Entries ===");
         System.out.println(journal.formatAllEntries());
 
+    }
+
+    // EFFECT: handle quit command
+    private boolean handleQuitCommand(String input) {
+        if (input.trim().equalsIgnoreCase("quit")) {
+            return false;
+        } else {
+            System.out.println("Invalid command. Did you intend to quit? please use 'quit' to exit.");
+            return true;
+        }
     }
 
     public static void main(String[] args) throws Exception {
