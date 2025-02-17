@@ -201,4 +201,14 @@ public class TestJournalEntry {
         assertEquals("n/a", journalEntry.getUsAndThem());
     }
 
+    @Test
+    void testGetWordCount() {
+        assertEquals(2, journalEntry.getWordCount());
+    }
+
+    @Test
+    void testGetWordCountEmpty() {
+        journalEntry = new JournalEntry("");
+        assertEquals(0, journalEntry.getWordCount());
+    }
 }

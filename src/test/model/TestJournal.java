@@ -11,12 +11,14 @@ import org.junit.jupiter.api.Test;
 public class TestJournal {
     private Journal journal;
     private JournalEntry entry;
+    private JournalEntry entryFail;
     private JournalEntry entry2;
 
     @BeforeEach
     void runBefore() throws InterruptedException {
         journal = new Journal();
         entry = new JournalEntry("Hello, world!");
+        entryFail = new JournalEntry("Hello, new world!");
         Thread.sleep(1000);
         entry2 = new JournalEntry("Hello, new world!");
         Thread.sleep(1000);
@@ -33,7 +35,12 @@ public class TestJournal {
         assertTrue(journal.createNewEntry(entry));
         assertTrue(journal.createNewEntry(entry2));
         assertEquals(2, journal.getNumberOfEntries());
+    }
 
+    @Test
+    void testCreateNewEntryTwiceFail() {
+        assertTrue(journal.createNewEntry(entry));
+        assertFalse(journal.createNewEntry(entryFail));
     }
 
     @Test
@@ -99,8 +106,8 @@ public class TestJournal {
         LocalDateTime dateTime2 = entry2.getCreatedTime();
         String dateTime1Formatted = journal.formatDateTime(dateTime1);
         String dateTime2Formatted = journal.formatDateTime(dateTime2);
-        String expected = dateTime1Formatted + " - " + entry.getEntryPreview() + "\n" +
-                dateTime2Formatted + " - " + entry2.getEntryPreview() + "\n";
+        String expected = dateTime2Formatted + " - " + entry2.getEntryPreview() + "\n" +
+                dateTime1Formatted + " - " + entry.getEntryPreview() + "\n";
         assertEquals(expected, journal.formatAllEntries());
     }
 

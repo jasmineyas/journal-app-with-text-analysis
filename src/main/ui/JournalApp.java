@@ -43,31 +43,19 @@ public class JournalApp {
                         createEntry();
                         break;
                     case "view":
-                        if (parts.length < 2) {
-                            System.out.println("Please provide a date (format: " + DATE_FORMAT);
-                        } else {
-                            viewEntry(parts[1]);
-                        }
-                        break;
                     case "edit":
-                        if (parts.length < 2) {
-                            System.out.println("Please provide a date (format: " + DATE_FORMAT);
-                        } else {
-                            editEntry(parts[1]);
-                        }
-                        break;
                     case "delete":
-                        if (parts.length < 2) {
-                            System.out.println("Please provide a date (format: " + DATE_FORMAT);
-                        } else {
-                            deleteEntry(parts[1]);
-                        }
+                        handleDateBasedCommand(parts, command);
                         break;
                     case "list":
                         listEntries();
                         break;
                     case "quit":
-                        running = false;
+                        if (input.trim().equalsIgnoreCase("quit")) {
+                            running = false;
+                        } else {
+                            System.out.println("Invalid command. Did you intend to quit? please use 'quit' to exit.");
+                        }
                         break;
                     default:
                         System.out.println("Invalid command. Please try again.");
@@ -79,6 +67,26 @@ public class JournalApp {
     }
 
     // below are all the helper functions for the handleUserInput
+
+    // EFFECTS: handles commands that require a date parameter, displays error if
+    // date is missing
+    private void handleDateBasedCommand(String[] parts, String command) {
+        if (parts.length < 2) {
+            System.out.println("Please provide a date (format: " + DATE_FORMAT);
+        } else {
+            switch (command) {
+                case "view":
+                    viewEntry(parts[1]);
+                    break;
+                case "edit":
+                    editEntry(parts[1]);
+                    break;
+                case "delete":
+                    deleteEntry(parts[1]);
+                    break;
+            }
+        }
+    }
 
     // EFFECT: display the entry user specificed with a date
     private void viewEntry(String dateString) {

@@ -18,6 +18,7 @@ public class Analyzer {
      * happy.txt - contains words indicating happiness
      * sad.txt - contains words indicating sadness
      * zen.txt - contains words indicating neutral/calm state
+     * anxious.txt - contains words indicating anxiety
      * primary_sense/
      * sight.txt - visual perception words
      * hearing.txt - auditory perception words
@@ -72,12 +73,9 @@ public class Analyzer {
                 String fileName = filePath.getFileName().toString();
                 String category = fileName.substring(0, fileName.lastIndexOf('.'));
 
-                try {
-                    Set<String> keywords = readKeywordsFromFile(filePath.toString());
-                    keywordMap.put(category, keywords);
-                } catch (Exception e) {
-                    throw new RuntimeException("Error reading file: " + filePath);
-                }
+                Set<String> keywords = readKeywordsFromFile(filePath.toString());
+                keywordMap.put(category, keywords);
+
             });
         } catch (IOException e) {
             e.printStackTrace();

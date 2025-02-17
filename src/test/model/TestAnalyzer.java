@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestAnalyzer {
     private Analyzer analyzer;
     private static final String TEST_MOOD_DIR = "src/main/testdata/mood";
+    private static final String INVALID_DIR = "src/test/invalid/dir";
+    private static final String INVALID_FILE = "src/test/invalid/file.txt";
+
     private Map<String, Set<String>> testHappyKeywords;
     private Map<String, Set<String>> testSadKeywords;
 
@@ -19,6 +22,18 @@ public class TestAnalyzer {
         testHappyKeywords.put("happy", new HashSet<>(Arrays.asList("happy", "excited", "joy")));
         testSadKeywords = new HashMap<>();
         testSadKeywords.put("sad", new HashSet<>(Arrays.asList("sad", "lonely", "depressed")));
+    }
+
+    @Test
+    void testLoadKeywordsMapInvalidDirectory() {
+        Map<String, Set<String>> result = analyzer.loadKeywordsMap(INVALID_DIR);
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void testReadKeywordsFileInvalidFile() {
+        Set<String> result = analyzer.readKeywordsFromFile(INVALID_FILE);
+        assertTrue(result.isEmpty());
     }
 
     @Test

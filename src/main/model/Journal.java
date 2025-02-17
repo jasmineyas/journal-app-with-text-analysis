@@ -54,8 +54,12 @@ public class Journal {
     // TODO: I don't care about last updated date yet - could add in the future
     // EFFECTS: Returns all entries formatted in date time - entry preview format
     public String formatAllEntries() {
-       StringBuilder entries = new StringBuilder();
-        for (LocalDateTime dateTime : journalEntries.keySet()) {
+        StringBuilder entries = new StringBuilder();
+
+        List<LocalDateTime> sortedDates = new ArrayList<>(journalEntries.keySet());
+        Collections.sort(sortedDates, Collections.reverseOrder());
+
+        for (LocalDateTime dateTime : sortedDates) {
             JournalEntry entry = journalEntries.get(dateTime);
             String formattedDateTime = formatDateTime(dateTime);
             entries.append(formattedDateTime);
