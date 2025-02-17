@@ -40,7 +40,10 @@ public class JournalApp {
             try {
                 switch (command) {
                     case "create":
-                        createEntry();
+                        if (parts.length > 1) {
+                            System.out.println("Invalid command. Please only type 'create' to create a new entry.");
+                        } else
+                            createEntry();
                         break;
                     case "view":
                     case "edit":
