@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 public class Analyzer {
     /**
-     * Directory structure for keyword files:
+     * Data directory structure for keyword files:
      * data/
      * mood/
      * happy.txt - contains words indicating happiness
@@ -35,10 +35,10 @@ public class Analyzer {
      * them.txt - third person words
      */
 
-    private static final String MOOD_DIR = "src/main/data/mood";
-    private static final String SENSE_DIR = "src/main/data/primary_sense";
-    private static final String TIME_DIR = "src/main/data/time_orientation";
-    private static final String US_THEM_DIR = "src/main/data/us_and_them";
+    private static final String MOOD_DIR = "data/mood";
+    private static final String SENSE_DIR = "data/primary_sense";
+    private static final String TIME_DIR = "data/time_orientation";
+    private static final String US_THEM_DIR = "data/us_and_them";
 
     private Map<String, Set<String>> moodKeywords;
     private Map<String, Set<String>> timeKeywords;
@@ -91,24 +91,28 @@ public class Analyzer {
 
         try {
             List<String> lines = Files.readAllLines(Paths.get(filePath));
-
-            for (String line : lines) {
-                if (!line.trim().isEmpty()) {
-                    keywords.add(line.trim().toLowerCase());
-                }
-            }
+            return processKeywords(lines);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return keywords;
     }
 
+    // EFFECTS:process a list of lines and return a set of keywords
+    public Set<String> processKeywords(List<String> lines) {
+        Set<String> keywords = new HashSet<>();
+        for (String line : lines) {
+            if (!line.trim().isEmpty()) {
+                keywords.add(line.trim().toLowerCase());
+            }
+        }
+        return keywords;
+    }
+
     // EFFECTS: counts occurences of keywords across all categories in a journal
-    // entry
-    // and returns a map where each key is a category from keywords map
-    // and each value is the count of keywords in the entry
-    // matching is case-insensitive
-    // if no mathces found, returns map with zero counts
+    // entry and returns a map where each key is a category from keywords map
+    // and each value is the count of keywords in the entry matching is
+    // case-insensitive, if no mathces found, returns map with zero counts
     public Map<String, Integer> countKeywordOccurrences(String content, Map<String, Set<String>> keywords) {
         String[] contentWords = content.toLowerCase().split("\\W+");
 
@@ -187,7 +191,8 @@ public class Analyzer {
     }
 }
 
-// // EFFECTS: calculate the mindset stats while writing given a journal entry
+// TODO: implement this method in the future phase
+// // EFFECTS: calculate the mindset stats while w
 // public List<String> calculateMindSetWhileWriting(JournalEntry entry) {
 // return List.of("Introvert", "positive", "uncertain", "thinking");
 // }

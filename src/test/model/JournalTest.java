@@ -8,7 +8,11 @@ import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TestJournal {
+/**
+ * Test class for Journal
+ */
+
+public class JournalTest {
     private Journal journal;
     private JournalEntry entry;
     private JournalEntry entryFail;

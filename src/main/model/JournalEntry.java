@@ -6,8 +6,7 @@ import java.util.*;
 
 /**
  * JournalEntry class represents a single journal entry with content and
- * analysis metrics.
- * Each entry tracks creation time, updates, and various text analyses.
+ * analysis metrics. Each entry tracks creation time, updates, and various text analyses.
  */
 
 public class JournalEntry {
