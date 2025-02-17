@@ -1,0 +1,4 @@
+touch
+texture
+pressure
+touched

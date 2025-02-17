@@ -1,0 +1,7 @@
+now
+today
+moment
+current
+immediate
+instant
+prompt
