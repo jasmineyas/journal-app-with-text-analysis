@@ -4,6 +4,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * Journal class represents a collection of journal entries.
+ * It allows CRUD operations on journal entries.
+ */
+
 public class Journal {
     private Map<LocalDateTime, JournalEntry> journalEntries;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

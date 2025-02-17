@@ -6,9 +6,13 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestAnalyzer {
+/**
+ * Test class for Analyzer
+ */
+
+public class AnalyzerTest {
     private Analyzer analyzer;
-    private static final String TEST_MOOD_DIR = "src/main/testdata/mood";
+    private static final String TEST_MOOD_DIR = "src/test/testdata/mood";
     private static final String INVALID_DIR = "src/test/invalid/dir";
     private static final String INVALID_FILE = "src/test/invalid/file.txt";
 
@@ -104,6 +108,24 @@ public class TestAnalyzer {
         keywordCount.put("happy", 0);
         keywordCount.put("sad", 0);
         assertEquals("n/a", analyzer.findDominantCategoryByCount(keywordCount, 0));
+    }
+
+    @Test
+    void testProcessKeywords() {
+        List<String> testLines = List.of(
+                "happy",
+                "   ",
+                "",
+                "  cheerful  ",
+                "\t",
+                "excited");
+
+        Set<String> keywords = analyzer.processKeywords(testLines);
+
+        assertEquals(3, keywords.size());
+        assertTrue(keywords.contains("happy"));
+        assertTrue(keywords.contains("cheerful"));
+        assertTrue(keywords.contains("excited"));
     }
 
 }

@@ -4,6 +4,11 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 import model.*;
 
+/**
+ * JournalApp is a simple journal application with text analysis. 
+ * This is the console interface class.  
+ */
+
 public class JournalApp {
     private Journal journal;
     private Scanner scanner;

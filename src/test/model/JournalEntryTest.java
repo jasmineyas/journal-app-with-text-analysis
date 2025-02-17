@@ -8,7 +8,11 @@ import java.time.temporal.ChronoUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TestJournalEntry {
+/**
+ * Test class for JournalEntry
+ */
+
+public class JournalEntryTest {
     private JournalEntry journalEntry;
 
     @BeforeEach
@@ -26,8 +30,7 @@ public class TestJournalEntry {
 
         assertEquals("Hello, world! I am editing this content.", journalEntry.getContent());
         assertTrue(journalEntry.getLastUpdatedTime().isAfter(beforeEdit));
-        assertTrue(journalEntry.getLastUpdatedTime().isBefore(afterEdit)
-                || journalEntry.getLastUpdatedTime().isEqual(afterEdit));
+        assertTrue(journalEntry.getLastUpdatedTime().isBefore(afterEdit));
     }
 
     @Test
@@ -50,8 +53,7 @@ public class TestJournalEntry {
         LocalDateTime afterCreation = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
         assertTrue(journalEntry.getCreatedTime().isAfter(beforeCreation));
-        assertTrue(journalEntry.getCreatedTime().isBefore(afterCreation)
-                || journalEntry.getCreatedTime().isEqual(afterCreation));
+        assertTrue(journalEntry.getCreatedTime().isBefore(afterCreation));
     }
 
     @Test
