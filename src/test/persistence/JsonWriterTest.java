@@ -26,7 +26,7 @@ public class JsonWriterTest extends JsonTest {
     void testWriterInvalidFile() {
         try {
             Journal journal = new Journal("My journal");
-            JsonWriter writer = new JsonWriter("data/my\\0illegal:fileName.json");
+            JsonWriter writer = new JsonWriter("data/testdata/persistence/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
         } catch (IOException e) {
@@ -38,14 +38,14 @@ public class JsonWriterTest extends JsonTest {
     void testWriterEmptyJournal() {
         try {
             Journal journal = new Journal("My journal");
-            JsonWriter writer = new JsonWriter("data/persistence/testWriterEmptyJournal.json");
+            JsonWriter writer = new JsonWriter("data/testdata/persistence/testWriterEmptyJournal.json");
             writer.open();
             writer.write(journal);
             writer.close();
 
-            JsonReader reader = new JsonReader("data/persistence/testWriterEmptyJournal.json");
+            JsonReader reader = new JsonReader("data/testdata/persistence/testWriterEmptyJournal.json");
             journal = reader.read();
-            assertEquals("My jounral", journal.getName());
+            assertEquals("My journal", journal.getName());
             assertEquals(0, journal.getNumberOfEntries());
         } catch (IOException e) {
             fail("Exception should not have been throw :(");
@@ -63,12 +63,12 @@ public class JsonWriterTest extends JsonTest {
             LocalDateTime entry2Time = entry2.getCreatedTime();
             journal.createNewEntry(entry1);
             journal.createNewEntry(entry2);
-            JsonWriter writer = new JsonWriter("data/persistence/testWriterGeneralJournal.json");
+            JsonWriter writer = new JsonWriter("data/testdata/persistence/testWriterGeneralJournal.json");
             writer.open();
             writer.write(journal);
             writer.close();
 
-            JsonReader reader = new JsonReader("data/persistence/testWriterGeneralJournal.json");
+            JsonReader reader = new JsonReader("data/testdata/persistence/testWriterGeneralJournal.json");
             Journal readJournal = reader.read();
             assertEquals("My journal", readJournal.getName());
             assertEquals(2, readJournal.getNumberOfEntries());

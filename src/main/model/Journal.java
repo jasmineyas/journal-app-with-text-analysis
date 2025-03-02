@@ -4,12 +4,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /**
  * Journal class represents a collection of journal entries.
  * It allows CRUD operations on journal entries.
  */
 
-public class Journal {
+public class Journal implements Writable {
+
     private String name;
     private Map<LocalDateTime, JournalEntry> journalEntries;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -19,8 +24,8 @@ public class Journal {
         journalEntries = new HashMap<>();
     }
 
-    public String getName(){
-        return name; 
+    public String getName() {
+        return name;
     }
 
     // REQUIRE: the entry doesn't exist already
@@ -106,6 +111,23 @@ public class Journal {
 
     public Map<LocalDateTime, JournalEntry> getAllEntries() {
         return journalEntries;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject journalJson = new JSONObject();
+        journalJson.put("name", this.name);
+
+        JSONObject journalEntriesJson = new JSONObject();
+
+        for (Map.Entry<LocalDateTime, JournalEntry> entry : journalEntries.entrySet()) {
+            String createdTimeString = entry.getKey().toString();
+            journalEntriesJson.put(createdTimeString, entry.getValue().toJson());
+        }
+
+        journalJson.put("journalEntries", journalEntriesJson);
+        return journalJson;
+
     }
 
 }

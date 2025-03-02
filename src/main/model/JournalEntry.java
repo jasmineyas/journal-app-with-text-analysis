@@ -4,13 +4,18 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /**
  * JournalEntry class represents a single journal entry with content and
  * analysis metrics. Each entry tracks creation time, updates, and various text
  * analyses.
  */
 
-public class JournalEntry {
+public class JournalEntry implements Writable {
+
     private LocalDateTime createdTime;
     private LocalDateTime lastUpdatedTime;
 
@@ -133,6 +138,14 @@ public class JournalEntry {
     // EFFECTS: set the journal entry last updated time to the given time
     public void setLastUpdatedTime(LocalDateTime time) {
         this.lastUpdatedTime = time;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("lastUpdatedTime", lastUpdatedTime.toString());
+        jsonObject.put("content", content);
+        return jsonObject;
     }
 
     // TODO: leaving this method out for now - add it later
