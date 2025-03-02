@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AnalyzerTest {
     private Analyzer analyzer;
-    private static final String TEST_MOOD_DIR = "src/test/testdata/mood";
+    private static final String TEST_MOOD_DIR = "data/testdata/mood";
     private static final String INVALID_DIR = "src/test/invalid/dir";
     private static final String INVALID_FILE = "src/test/invalid/file.txt";
 
