@@ -14,31 +14,32 @@ public class Analyzer {
     /**
      * Data directory structure for keyword files:
      * data/
+     * analyzerData/
      * mood/
      * happy.txt - contains words indicating happiness
      * sad.txt - contains words indicating sadness
      * zen.txt - contains words indicating neutral/calm state
      * anxious.txt - contains words indicating anxiety
-     * primary_sense/
+     * primarySense/
      * sight.txt - visual perception words
      * hearing.txt - auditory perception words
      * touch.txt - tactile perception words
      * taste.txt - taste-related words
-     * time_orientation/
+     * timeOrientation/
      * past.txt - past-tense indicators
      * present.txt - present-tense indicators
      * future.txt - future-tense indicators
-     * us_and_them/
+     * usAndThem/
      * i.txt - self-referential words
      * us.txt - collective first person words
      * you.txt - second person words
      * them.txt - third person words
      */
 
-    private static final String MOOD_DIR = "data/mood";
-    private static final String SENSE_DIR = "data/primary_sense";
-    private static final String TIME_DIR = "data/time_orientation";
-    private static final String US_THEM_DIR = "data/us_and_them";
+    private static final String MOOD_DIR = "data/analyzerData/mood";
+    private static final String SENSE_DIR = "data/analyzerData/primarySense";
+    private static final String TIME_DIR = "data/analyzerData/timeOrientation";
+    private static final String US_THEM_DIR = "data/analyzerData/usAndThem";
 
     private Map<String, Set<String>> moodKeywords;
     private Map<String, Set<String>> timeKeywords;

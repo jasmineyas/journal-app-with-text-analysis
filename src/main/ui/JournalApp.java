@@ -3,6 +3,11 @@ package ui;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * JournalApp is a simple journal application with text analysis.
@@ -12,11 +17,17 @@ import model.*;
 public class JournalApp {
     private Journal journal;
     private Scanner scanner;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private static final String JSON_STORE = "./data/userData/journal.json";
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    public JournalApp() {
+    public JournalApp() throws FileNotFoundException {
         this.journal = new Journal("Jasmine's journal");
         this.scanner = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        handleUserInput();
     }
 
     // EFFECT: display options on what the user can do - show available commands
@@ -46,7 +57,7 @@ public class JournalApp {
                 System.out.println("Invalid date format. Please use: " + DATE_FORMAT + ")");
             }
         }
-
+        System.out.println("\nThank you for taking care of yourself!💖 ");
     }
 
     // below are all the helper functions for the handleUserInput
@@ -212,12 +223,6 @@ public class JournalApp {
             System.out.println("Invalid command. Did you intend to quit? please use 'quit' to exit.");
             return true;
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        JournalApp app = new JournalApp();
-        app.handleUserInput();
-        System.out.println("\nThank you for taking care of yourself!💖 ");
     }
 
 }

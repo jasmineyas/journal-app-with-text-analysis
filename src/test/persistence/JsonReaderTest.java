@@ -32,7 +32,7 @@ public class JsonReaderTest extends JsonTest {
     @Test
     void testReaderEmptyJournal() {
 
-        JsonReader reader = new JsonReader("data/testdata/persistence/testReaderEmptyJournal.json");
+        JsonReader reader = new JsonReader("data/testData/persistence/testReaderEmptyJournal.json");
         try {
             Journal journal = reader.read();
             assertEquals("My journal", journal.getName());
@@ -44,7 +44,7 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderGeneralJournal() {
-        JsonReader reader = new JsonReader("data/testdata/persistence/testReaderGeneralJournal.json");
+        JsonReader reader = new JsonReader("data/testData/persistence/testReaderGeneralJournal.json");
         try {
             Journal journal = reader.read();
             assertEquals("Jasmine's journal", journal.getName());
