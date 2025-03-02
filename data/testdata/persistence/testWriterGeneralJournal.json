@@ -1,13 +1,13 @@
 {
     "name": "My journal",
     "journalEntries": {
-        "2025-03-02T11:49:26": {
-            "lastUpdatedTime": "2025-03-02T11:49:26",
-            "content": "we ate so much food yesterday. I am not even hungry this morning."
-        },
-        "2025-03-02T11:49:24": {
-            "lastUpdatedTime": "2025-03-02T11:49:24",
+        "2025-03-02T14:40:23": {
+            "lastUpdatedTime": "2025-03-02T14:40:23",
             "content": "I am so happy today!! YAYYYYYYYYY!"
+        },
+        "2025-03-02T14:40:25": {
+            "lastUpdatedTime": "2025-03-02T14:40:25",
+            "content": "we ate so much food yesterday. I am not even hungry this morning."
         }
     }
 }
