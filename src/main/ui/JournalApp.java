@@ -15,7 +15,7 @@ public class JournalApp {
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public JournalApp() {
-        this.journal = new Journal();
+        this.journal = new Journal("Jasmine's journal");
         this.scanner = new Scanner(System.in);
     }
 

@@ -1,0 +1,13 @@
+{
+    "name": "Jasmine's journal",
+    "jounralEntries": {
+        "2025-03-01T21:16:32": {
+            "lastUpdatedTime": "2025-03-04T18:00:00",
+            "content": "i had a really nice day today! I am really happy that I get to eat the food with my mom!"
+        },
+        "2025-01-01T21:16:32": {
+            "lastUpdatedTime": "2025-02-04T18:00:00",
+            "content": "Feeling tired today, but still managed to get some work done. Hoping for better sleep tonight."
+        }
+    }
+}

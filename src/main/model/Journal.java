@@ -10,11 +10,17 @@ import java.util.*;
  */
 
 public class Journal {
+    private String name;
     private Map<LocalDateTime, JournalEntry> journalEntries;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public Journal() {
+    public Journal(String name) {
+        this.name = name;
         journalEntries = new HashMap<>();
+    }
+
+    public String getName(){
+        return name; 
     }
 
     // REQUIRE: the entry doesn't exist already
@@ -96,6 +102,10 @@ public class Journal {
     // EFFECTS: Returns the number of entries in the journal
     public int getNumberOfEntries() {
         return journalEntries.size();
+    }
+
+    public Map<LocalDateTime, JournalEntry> getAllEntries() {
+        return journalEntries;
     }
 
 }

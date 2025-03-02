@@ -20,7 +20,7 @@ public class JournalTest {
 
     @BeforeEach
     void runBefore() throws InterruptedException {
-        journal = new Journal();
+        journal = new Journal("Jasmine's journal");
         entry = new JournalEntry("Hello, world!");
         entryFail = new JournalEntry("Hello, new world!");
         Thread.sleep(1000);
