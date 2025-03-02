@@ -5,8 +5,12 @@ import org.json.JSONObject;
 
 import java.io.*;
 
-// represents a writer that writes JSON representation of journal to file 
-// TODO: add proper code source reference: json serialization demo 
+/**
+ * represents a writer that writes JSON representation of journal to file
+ * Code reference:
+ * https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+ * /src/main/persistence/JsonWriter.java
+ */
 
 public class JsonWriter {
     private static final int TAB = 4;

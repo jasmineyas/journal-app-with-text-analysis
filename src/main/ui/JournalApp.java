@@ -13,6 +13,7 @@ import java.io.IOException;
 /**
  * JournalApp is a simple journal application with text analysis.
  * This is the console interface class.
+ * Used JsonSerializationDemo project as reference for phase 2 implementation.
  */
 
 public class JournalApp {

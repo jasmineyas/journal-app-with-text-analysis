@@ -12,8 +12,12 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
-// represents a reader that reads workroom from JSON data stroed in file 
-// TODO: add proper code source reference: json serialization demo 
+/**
+ * represents a reader that reads workroom from JSON data stroed in file
+ * Code reference:
+ * https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+ * /src/main/persistence/JsonReader.java
+ */ 
 
 public class JsonReader {
     private String source;
