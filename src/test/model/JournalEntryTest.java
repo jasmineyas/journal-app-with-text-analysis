@@ -65,7 +65,7 @@ public class JournalEntryTest {
     @Test
     void testCreateEntryPreviewTestLong() {
         String longContent = "Today I am feeling really happy. I will be going to the park with my friends. "
-                + "We are going to have a great time. I am a bit worried about the test tomorrow. I hope I will do well.";
+                + "We are going to have a great time. I am a bit worried about the test tomorrow. ";
         journalEntry = new JournalEntry(longContent);
         String preview = journalEntry.getEntryPreview();
 

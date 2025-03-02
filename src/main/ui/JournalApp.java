@@ -39,6 +39,7 @@ public class JournalApp {
     }
 
     // EFFECTS: prompts user to load an existing journal or create a new journal
+    @SuppressWarnings("methodlength")
     private void loadOrNewJournal() {
         System.out.println("=====================================================");
         System.out.println("Setting up the journal app...");
@@ -50,7 +51,7 @@ public class JournalApp {
 
             if (choice.equals("load")) {
                 System.out.println(
-                        "Enter the name of the journal file to load (e.g., 'jasmine' → loads 'data/userData/jasmine.json')");
+                        "Enter the journal file name to load (e.g., 'jasmine' → loads 'data/userData/jasmine.json')");
                 String fileName = scanner.nextLine().trim();
                 jsonStore = "data/userData/" + fileName + ".json";
 
@@ -83,8 +84,9 @@ public class JournalApp {
             String name = getValidFileName();
             name = resolveFileConflict(name);
 
-            if (name == null)
+            if (name == null) {
                 continue; // Restart if user chooses to rename
+            }
 
             journal = new Journal(name);
             jsonStore = "data/userData/" + name + ".json";
@@ -197,10 +199,10 @@ public class JournalApp {
     }
 
     // below are all the helper functions for the handleUserInput
-
+    // EFFECTS: process user commands on the menu page.
+    @SuppressWarnings("methodlength")
     private boolean processCommand(String input, String[] parts) {
         String command = parts[0].toLowerCase();
-
         switch (command) {
             case "create":
                 if (parts.length > 1) {
@@ -374,6 +376,7 @@ public class JournalApp {
     }
 
     // EFFECTS: handle quit command
+    @SuppressWarnings("methodlength")
     private boolean handleQuitCommand(String input) {
         if (input.trim().equalsIgnoreCase("quit")) {
             if (isModified) {
@@ -406,6 +409,7 @@ public class JournalApp {
     }
 
     // EFFECTS: handle back command
+    @SuppressWarnings("methodlength")
     private void handleBackCommand() {
         if (isModified) {
             while (true) {

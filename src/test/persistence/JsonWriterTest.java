@@ -53,6 +53,7 @@ public class JsonWriterTest extends JsonTest {
     }
 
     @Test
+    @SuppressWarnings("methodlength")
     void testWriterGeneralJournal() {
         try {
             Journal journal = new Journal("My journal");
