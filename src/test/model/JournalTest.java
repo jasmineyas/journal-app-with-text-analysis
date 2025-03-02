@@ -20,7 +20,7 @@ public class JournalTest {
 
     @BeforeEach
     void runBefore() throws InterruptedException {
-        journal = new Journal();
+        journal = new Journal("Jasmine's journal");
         entry = new JournalEntry("Hello, world!");
         entryFail = new JournalEntry("Hello, new world!");
         Thread.sleep(1000);
@@ -110,8 +110,8 @@ public class JournalTest {
         LocalDateTime dateTime2 = entry2.getCreatedTime();
         String dateTime1Formatted = journal.formatDateTime(dateTime1);
         String dateTime2Formatted = journal.formatDateTime(dateTime2);
-        String expected = dateTime2Formatted + " - " + entry2.getEntryPreview() + "\n" +
-                dateTime1Formatted + " - " + entry.getEntryPreview() + "\n";
+        String expected = dateTime2Formatted + " - " + entry2.getEntryPreview() + "\n"
+                + dateTime1Formatted + " - " + entry.getEntryPreview() + "\n";
         assertEquals(expected, journal.formatAllEntries());
     }
 

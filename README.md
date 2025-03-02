@@ -33,6 +33,15 @@ I understand that implementing a robust text analysis algorithm is ambitious, so
 
 ### Phase 0
 
+
+**Persistence** 
+
+- As a user, I want to be able to save my journal entries to file (if I so choose). 
+- As a user, when I select the quit option from menu, I want to be reminded to save my journal entries to file and have the option to do so or not. 
+- As a user, when I start the application, I want to be given the option to load a past journal from file. 
+- As a user, when I start the application, I want to be given the option to create a brand new journal. 
+
+
 **Entry creation & management** 
 
 - As a user, I want to add a new journal entry so that I can document my thoughts and experiences.

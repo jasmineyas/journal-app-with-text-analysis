@@ -12,12 +12,12 @@
 
 // // this is a utility class
 
-// // EFFECT: generate a bar chart using the given data
+// // EFFECTS: generate a bar chart using the given data
 // public void generateBarChart(List<Double> data, String label){
 
 // }
 
-// // EFFECT: generate a donut chart using the given dat
+// // EFFECTS: generate a donut chart using the given dat
 // public void generateDonutChart(List<Double> data, String label) {
 
 // }

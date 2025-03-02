@@ -4,22 +4,33 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /**
  * Journal class represents a collection of journal entries.
  * It allows CRUD operations on journal entries.
  */
 
-public class Journal {
+public class Journal implements Writable {
+
+    private String name;
     private Map<LocalDateTime, JournalEntry> journalEntries;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public Journal() {
+    public Journal(String name) {
+        this.name = name;
         journalEntries = new HashMap<>();
+    }
+
+    public String getName() {
+        return name;
     }
 
     // REQUIRE: the entry doesn't exist already
     // MODIFY: this
-    // EFFECT: create an new entry, return True it is created,
+    // EFFECTS: create an new entry, return True it is created,
     // returns False if it already exists
     public boolean createNewEntry(JournalEntry entry) {
         if (journalEntries.containsKey(entry.getCreatedTime())) {
@@ -31,14 +42,14 @@ public class Journal {
 
     // REQUIRE: the entry exists in the list and newContent is not empty
     // MODIFY: this
-    // EFFECT: update an existing entry content
+    // EFFECTS: update an existing entry content
     public void updateEntry(JournalEntry entry, String newContent) {
         journalEntries.get(entry.getCreatedTime()).editContent(newContent);
     }
 
     // REQUIRE: this entry exists in the journal
     // MODIFY: this
-    // EFFECT: delete an entry with a provided datetime
+    // EFFECTS: delete an entry with a provided datetime
     // return True if it is deleted, False if it doesn't exist
     public boolean deleteEntry(LocalDateTime dateTime) {
         if (!journalEntries.containsKey(dateTime)) {
@@ -96,6 +107,27 @@ public class Journal {
     // EFFECTS: Returns the number of entries in the journal
     public int getNumberOfEntries() {
         return journalEntries.size();
+    }
+
+    public Map<LocalDateTime, JournalEntry> getAllEntries() {
+        return journalEntries;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject journalJson = new JSONObject();
+        journalJson.put("name", this.name);
+
+        JSONObject journalEntriesJson = new JSONObject();
+
+        for (Map.Entry<LocalDateTime, JournalEntry> entry : journalEntries.entrySet()) {
+            String createdTimeString = entry.getKey().toString();
+            journalEntriesJson.put(createdTimeString, entry.getValue().toJson());
+        }
+
+        journalJson.put("journalEntries", journalEntriesJson);
+        return journalJson;
+
     }
 
 }

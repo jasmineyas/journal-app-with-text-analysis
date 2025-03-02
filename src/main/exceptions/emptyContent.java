@@ -1,5 +1,5 @@
-package exceptions;
+// package exceptions;
 
-public class emptyContent extends Exception {
-    
-}
+// public class emptyContent extends Exception {
+
+// }
