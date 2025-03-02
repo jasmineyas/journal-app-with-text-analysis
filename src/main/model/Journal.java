@@ -30,7 +30,7 @@ public class Journal implements Writable {
 
     // REQUIRE: the entry doesn't exist already
     // MODIFY: this
-    // EFFECT: create an new entry, return True it is created,
+    // EFFECTS: create an new entry, return True it is created,
     // returns False if it already exists
     public boolean createNewEntry(JournalEntry entry) {
         if (journalEntries.containsKey(entry.getCreatedTime())) {
@@ -42,14 +42,14 @@ public class Journal implements Writable {
 
     // REQUIRE: the entry exists in the list and newContent is not empty
     // MODIFY: this
-    // EFFECT: update an existing entry content
+    // EFFECTS: update an existing entry content
     public void updateEntry(JournalEntry entry, String newContent) {
         journalEntries.get(entry.getCreatedTime()).editContent(newContent);
     }
 
     // REQUIRE: this entry exists in the journal
     // MODIFY: this
-    // EFFECT: delete an entry with a provided datetime
+    // EFFECTS: delete an entry with a provided datetime
     // return True if it is deleted, False if it doesn't exist
     public boolean deleteEntry(LocalDateTime dateTime) {
         if (!journalEntries.containsKey(dateTime)) {

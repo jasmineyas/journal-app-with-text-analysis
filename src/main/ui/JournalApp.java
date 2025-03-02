@@ -17,33 +17,84 @@ import java.io.IOException;
 public class JournalApp {
     private Journal journal;
     private Scanner scanner;
+    private String jsonStore;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private static final String JSON_STORE = "./data/userData/journal.json";
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private boolean isModified;
 
     public JournalApp() throws FileNotFoundException {
-        this.journal = new Journal("Jasmine's journal");
         this.scanner = new Scanner(System.in);
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+        this.journal = new Journal("Jasmine's journal");
+        intiJournalApp();
         handleUserInput();
+        // jsonWriter = new JsonWriter(JSON_STORE);
+        // jsonReader = new JsonReader(JSON_STORE);
+
     }
 
-    // EFFECT: display options on what the user can do - show available commands
+    // EFFECTS: prompts user to load an existing journal or create a new journal
+    private void intiJournalApp() {
+        System.out.println("Welcome to the journal app!👋");
+        while (true) {
+            System.out.println(
+                    "Do you want to load an existing journal file (type: load) or create a new one (type: new)?");
+            String choice = scanner.nextLine().trim().toLowerCase();
+
+            if (choice.equals("load")) {
+                System.out.println(
+                        "Enter the name of the journal file to load (e.g., 'jasmine' → loads 'data/userData/jasmine.json')");
+                String fileName = scanner.nextLine().trim();
+                jsonStore = "data/userData/" + fileName + ".json";
+
+                jsonReader = new JsonReader(jsonStore);
+                jsonWriter = new JsonWriter(jsonStore);
+
+                try {
+                    journal = jsonReader.read();
+                    System.out.println("Loaded " + journal.getName() + "from" + jsonStore);
+                    break;
+                } catch (IOException e) {
+                    System.out.println("File not found. Please check for typo or create a new file.");
+                }
+            } else if (choice.equals("new")) {
+                createNewJournal();
+                break;
+            } else {
+                System.out.println("Invalid input. Please enter 'load' to load or 'new' to create a new journal.");
+            }
+        }
+        isModified = false;
+    }
+
+    // EFFECTS: prompts user to provide a new journal anme and creates a new journal
+    private void createNewJournal() {
+        System.out.println("Enter a name for your new journal: ");
+        String name = scanner.nextLine().trim();
+        journal = new Journal(name);
+        jsonStore = "data/userData" + name + ".json'";
+
+        System.out.println("Your journal will be saved as '" + jsonStore + "'");
+        jsonWriter = new JsonWriter(jsonStore);
+        jsonReader = new JsonReader(jsonStore);
+        System.out.println("Createrd new journal: " + name);
+    }
+
+    // EFFECTS: display options on what the user can do - show available commands
     public void displayMenu() {
-        System.out.println("\n=== 📝 Journal App Menu ===");
+        System.out.println("\n======= 📝 Journal App Menu =======");
         System.out.println("Available commands:");
-        System.out.println("> create - Create a new journal entry");
-        System.out.println("> view <yyyy-MM-dd HH:mm:ss> - View an entry");
-        System.out.println("> edit <yyyy-MM-dd HH:mm:ss> - Edit an entry");
-        System.out.println("> delete <yyyy-MM-dd HH:mm:ss> - Delete an entry");
-        System.out.println("> list - List all entries");
-        System.out.println("> quit - Exit the application");
-        System.out.println("===========================");
+        System.out.println("\tcreate - Create a new journal entry");
+        System.out.println("\tview <yyyy-MM-dd HH:mm:ss> - View an entry");
+        System.out.println("\tedit <yyyy-MM-dd HH:mm:ss> - Edit an entry");
+        System.out.println("\tdelete <yyyy-MM-dd HH:mm:ss> - Delete an entry");
+        System.out.println("\tlist - List all entries");
+        System.out.println("\tquit - Exit the application");
+        System.out.println("===================================");
     }
 
-    // EFFECT: read user commands and call the right methods
+    // EFFECTS: read user commands and call the right methods
     public void handleUserInput() {
         boolean running = true;
         while (running) {
@@ -81,6 +132,9 @@ public class JournalApp {
             case "list":
                 handleListCommand(input);
                 return true;
+            case "save":
+                handleSave();
+                return true;
             case "quit":
                 return handleQuitCommand(input);
             default:
@@ -109,7 +163,7 @@ public class JournalApp {
         }
     }
 
-    // EFFECT: display the journal entry and its text analysis specififed by the
+    // EFFECTS: display the journal entry and its text analysis specififed by the
     // user specificed date
     private void viewEntry(String dateString) {
         JournalEntry entry = journal.getEntry(dateString);
@@ -131,7 +185,7 @@ public class JournalApp {
         System.out.println("Perspective: " + entry.getUsAndThem());
     }
 
-    // EFFECT: allow the user to edit the entry if it exists
+    // EFFECTS: allow the user to edit the entry if it exists
     private void editEntry(String dateString) {
         JournalEntry entry = journal.getEntry(dateString);
         if (entry == null) {
@@ -157,9 +211,11 @@ public class JournalApp {
         System.out.println("Time Orientation: " + entry.getTimeOrientation());
         System.out.println("Primary Sense: " + entry.getPrimarySense());
         System.out.println("Perspective: " + entry.getUsAndThem());
+
+        isModified = true;
     }
 
-    // EFFECT: create a new journal entry and ask user to write the new entry
+    // EFFECTS: create a new journal entry and ask user to write the new entry
     private void createEntry() {
         System.out.println("Enter your journal entry (type ':wq' on a new line to save and exit):");
         StringBuilder content = new StringBuilder();
@@ -171,10 +227,11 @@ public class JournalApp {
         JournalEntry newEntry = new JournalEntry(content.toString().trim());
         if (journal.createNewEntry(newEntry)) {
             System.out.println("Entry created successfully.");
+            isModified = true;
         }
     }
 
-    // EFFECT: delete the entry user specified only if the entry exists in the
+    // EFFECTS: delete the entry user specified only if the entry exists in the
     // journal
     private void deleteEntry(String dateString) {
         JournalEntry entry = journal.getEntry(dateString);
@@ -194,7 +251,7 @@ public class JournalApp {
         }
     }
 
-    // EFFECT: check the input command
+    // EFFECTS: check the input command
     private void handleListCommand(String input) {
         if (input.trim().equalsIgnoreCase("list")) {
             listEntries();
@@ -203,7 +260,7 @@ public class JournalApp {
         }
     }
 
-    // EFFECT: loads and displays all the entries
+    // EFFECTS: loads and displays all the entries
     private void listEntries() {
         if (journal.getNumberOfEntries() == 0) {
             System.out.println("No entries found.");
@@ -215,9 +272,44 @@ public class JournalApp {
 
     }
 
-    // EFFECT: handle quit command
+    // EFFECTS: saves the journal to file
+    private void handleSave() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(journal);
+            jsonWriter.close();
+            isModified = false;
+            System.out.println("Saved" + journal.getName() + " to " + jsonStore);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + jsonStore);
+        }
+    }
+
+    // EFFECTS: handle quit command
     private boolean handleQuitCommand(String input) {
         if (input.trim().equalsIgnoreCase("quit")) {
+            if (isModified) {
+                while (true) {
+                    System.out.println("You have unsaved changes. Choose an option:");
+                    System.out.println("\tSave -> Save and quit");
+                    System.out.println("\tDon't save -> Discard changes and quit");
+                    System.out.println("\tCancel -> Cancel and return to menu");
+                    String response = scanner.nextLine().trim().toLowerCase();
+
+                    switch (response) {
+                        case "save":
+                            handleSave();
+                            return false;
+                        case "don't save":
+                            System.out.println("Discarding changes... quiting...");
+                            return false;
+                        case "cancel":
+                            return true;
+                        default:
+                            System.out.println("Invalid selection. Please enter 'Save', 'Don't save', or 'Cancel'.");
+                    }
+                }
+            }
             return false;
         } else {
             System.out.println("Invalid command. Did you intend to quit? please use 'quit' to exit.");
