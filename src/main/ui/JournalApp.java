@@ -5,8 +5,8 @@ import java.util.*;
 import model.*;
 
 /**
- * JournalApp is a simple journal application with text analysis. 
- * This is the console interface class.  
+ * JournalApp is a simple journal application with text analysis.
+ * This is the console interface class.
  */
 
 public class JournalApp {
@@ -23,12 +23,12 @@ public class JournalApp {
     public void displayMenu() {
         System.out.println("\n=== 📝 Journal App Menu ===");
         System.out.println("Available commands:");
-        System.out.println("1. create - Create a new journal entry");
-        System.out.println("2. view <yyyy-MM-dd HH:mm:ss> - View an entry");
-        System.out.println("3. edit <yyyy-MM-dd HH:mm:ss> - Edit an entry");
-        System.out.println("4. delete <yyyy-MM-dd HH:mm:ss> - Delete an entry");
-        System.out.println("5. list - List all entries");
-        System.out.println("6. quit - Exit the application");
+        System.out.println("> create - Create a new journal entry");
+        System.out.println("> view <yyyy-MM-dd HH:mm:ss> - View an entry");
+        System.out.println("> edit <yyyy-MM-dd HH:mm:ss> - Edit an entry");
+        System.out.println("> delete <yyyy-MM-dd HH:mm:ss> - Delete an entry");
+        System.out.println("> list - List all entries");
+        System.out.println("> quit - Exit the application");
         System.out.println("===========================");
     }
 
