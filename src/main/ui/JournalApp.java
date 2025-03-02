@@ -6,6 +6,7 @@ import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -20,7 +21,6 @@ public class JournalApp {
     private String jsonStore;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
-    private static final String JSON_STORE = "./data/userData/journal.json";
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private boolean isModified;
 
@@ -29,17 +29,22 @@ public class JournalApp {
         this.journal = new Journal("Jasmine's journal");
         intiJournalApp();
         handleUserInput();
-        // jsonWriter = new JsonWriter(JSON_STORE);
-        // jsonReader = new JsonReader(JSON_STORE);
+    }
 
+    // EFFECTS: set up the journal file for the session
+    private void intiJournalApp() {
+        System.out.println("Welcome to the journal app!👋");
+        loadOrNewJournal();
     }
 
     // EFFECTS: prompts user to load an existing journal or create a new journal
-    private void intiJournalApp() {
-        System.out.println("Welcome to the journal app!👋");
+    private void loadOrNewJournal() {
+        System.out.println("=====================================================");
+        System.out.println("Setting up the journal app...");
         while (true) {
-            System.out.println(
-                    "Do you want to load an existing journal file (type: load) or create a new one (type: new)?");
+            System.out.println("\tload - load an existing journal file");
+            System.out.println("\tnew - create a new journal file");
+            System.out.println("\tquit - leave the application");
             String choice = scanner.nextLine().trim().toLowerCase();
 
             if (choice.equals("load")) {
@@ -61,6 +66,9 @@ public class JournalApp {
             } else if (choice.equals("new")) {
                 createNewJournal();
                 break;
+            } else if (choice.equals("quit")) {
+                System.out.println("Exiting application. Goodbye!");
+                System.exit(0);
             } else {
                 System.out.println("Invalid input. Please enter 'load' to load or 'new' to create a new journal.");
             }
@@ -70,28 +78,104 @@ public class JournalApp {
 
     // EFFECTS: prompts user to provide a new journal anme and creates a new journal
     private void createNewJournal() {
-        System.out.println("Enter a name for your new journal: ");
-        String name = scanner.nextLine().trim();
-        journal = new Journal(name);
-        jsonStore = "data/userData" + name + ".json'";
+        while (true) {
+            String name = getValidFileName();
+            name = resolveFileConflict(name);
 
-        System.out.println("Your journal will be saved as '" + jsonStore + "'");
-        jsonWriter = new JsonWriter(jsonStore);
-        jsonReader = new JsonReader(jsonStore);
-        System.out.println("Createrd new journal: " + name);
+            if (name == null)
+                continue; // Restart if user chooses to rename
+
+            journal = new Journal(name);
+            jsonStore = "data/userData/" + name + ".json";
+
+            System.out.println("Your journal will be saved as '" + jsonStore + "'");
+            jsonWriter = new JsonWriter(jsonStore);
+            jsonReader = new JsonReader(jsonStore);
+            System.out.println("Created new journal: " + name);
+            break;
+        }
+    }
+
+    // EFFECTS: Prompts for a valid filename
+    private String getValidFileName() {
+        while (true) {
+            System.out.println("Enter a name for your new journal:");
+            String name = scanner.nextLine().trim();
+
+            if (isValidFileName(name)) {
+                return name;
+            }
+            System.out.println("Invalid file name! Please avoid special characters.");
+        }
+    }
+
+    // EFFECTS: Resolves conflicts if the file already exists
+    private String resolveFileConflict(String name) {
+        File file = new File("data/userData/" + name + ".json");
+
+        while (file.exists()) {
+            System.out.println("A journal with this name already exists. Choose an option:");
+            System.out.println("\t1 - Keep both: create a new file with a number");
+            System.out.println("\t2 - Rewrite: overwrite the existing file");
+            System.out.println("\t3 - Rename: enter a new name");
+
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1":
+                    name = getUniqueFileName(name);
+                    System.out.println("Creating a new file: " + name);
+                    return name;
+                case "2":
+                    System.out.println("Overwriting existing file...");
+                    return name;
+                case "3":
+                    return null; // Signal to restart journal creation with a new name
+                default:
+                    System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+            }
+        }
+        return name;
+    }
+
+    // EFFECTS: append a number to an existing file name to make it unique
+    private String getUniqueFileName(String fileName) {
+        int counter = 0;
+        File file;
+        String newName;
+
+        do {
+            counter++;
+            newName = fileName + "(" + counter + ")";
+            file = new File("data/userData/" + newName + ".json");
+        } while (file.exists());
+
+        return newName;
+    }
+
+    // EFFECTS: checks if a filename is valid (mac os)
+    private boolean isValidFileName(String fileName) {
+        if (fileName.isEmpty() || fileName.contains("/")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // EFFECTS: display options on what the user can do - show available commands
     public void displayMenu() {
-        System.out.println("\n======= 📝 Journal App Menu =======");
+        System.out.println("\n================ 📝 Journal App Menu ================");
+        System.out.println("You are currently in journal: " + journal.getName());
         System.out.println("Available commands:");
         System.out.println("\tcreate - Create a new journal entry");
         System.out.println("\tview <yyyy-MM-dd HH:mm:ss> - View an entry");
         System.out.println("\tedit <yyyy-MM-dd HH:mm:ss> - Edit an entry");
         System.out.println("\tdelete <yyyy-MM-dd HH:mm:ss> - Delete an entry");
         System.out.println("\tlist - List all entries");
+        System.out.println("\tsave - Save the journal to file");
         System.out.println("\tquit - Exit the application");
-        System.out.println("===================================");
+        System.out.println("\tback - Go back to load or create new screen");
+        System.out.println("=====================================================");
     }
 
     // EFFECTS: read user commands and call the right methods
@@ -137,6 +221,9 @@ public class JournalApp {
                 return true;
             case "quit":
                 return handleQuitCommand(input);
+            case "back":
+                handleBackCommand();
+                return true;
             default:
                 System.out.println("Invalid command. Please try again.");
                 return true;
@@ -245,6 +332,7 @@ public class JournalApp {
         if (confirmation.equals("y")) {
             if (journal.deleteEntry(dateString)) {
                 System.out.println("Entry deleted successfully.");
+                isModified = true;
             } else {
                 System.out.println("Deletion cancelled.");
             }
@@ -267,9 +355,8 @@ public class JournalApp {
             return;
         }
 
-        System.out.println("\n=== All Entries ===");
+        System.out.println("\n==================== All Entries ====================");
         System.out.println(journal.formatAllEntries());
-
     }
 
     // EFFECTS: saves the journal to file
@@ -279,7 +366,7 @@ public class JournalApp {
             jsonWriter.write(journal);
             jsonWriter.close();
             isModified = false;
-            System.out.println("Saved" + journal.getName() + " to " + jsonStore);
+            System.out.println("Saved" + " journal: " + journal.getName() + " to '" + jsonStore + "'");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + jsonStore);
         }
@@ -291,9 +378,9 @@ public class JournalApp {
             if (isModified) {
                 while (true) {
                     System.out.println("You have unsaved changes. Choose an option:");
-                    System.out.println("\tSave -> Save and quit");
-                    System.out.println("\tDon't save -> Discard changes and quit");
-                    System.out.println("\tCancel -> Cancel and return to menu");
+                    System.out.println("\tSave: save and quit");
+                    System.out.println("\tDon't save: discard changes and quit");
+                    System.out.println("\tCancel: cancel and return to menu");
                     String response = scanner.nextLine().trim().toLowerCase();
 
                     switch (response) {
@@ -314,6 +401,36 @@ public class JournalApp {
         } else {
             System.out.println("Invalid command. Did you intend to quit? please use 'quit' to exit.");
             return true;
+        }
+    }
+
+    // EFFECTS: handle back command
+    private void handleBackCommand() {
+        if (isModified) {
+            while (true) {
+                System.out.println("You have unsaved changes. Choose an option:");
+                System.out.println("\tSave: save and go back");
+                System.out.println("\tDon't save: discard changes and go back");
+                System.out.println("\tCancel: cancel and return to menu");
+                String response = scanner.nextLine().trim().toLowerCase();
+
+                switch (response) {
+                    case "save":
+                        handleSave();
+                        loadOrNewJournal();
+                        return;
+                    case "don't save":
+                        System.out.println("Discarding changes... going back to main menu.");
+                        loadOrNewJournal();
+                        return;
+                    case "cancel":
+                        return;
+                    default:
+                        System.out.println("Invalid selection. Please enter 'Save', 'Don't save', or 'Cancel'.");
+                }
+            }
+        } else {
+            loadOrNewJournal();
         }
     }
 
