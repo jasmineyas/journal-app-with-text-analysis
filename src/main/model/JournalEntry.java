@@ -123,6 +123,18 @@ public class JournalEntry {
         return usAndThem;
     }
 
+    // MODIFIES: this
+    // EFFECTS: set the journal entry created time to the given time
+    public void setCreatedTime(LocalDateTime time) {
+        this.createdTime = time;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set the journal entry last updated time to the given time
+    public void setLastUpdatedTime(LocalDateTime time) {
+        this.lastUpdatedTime = time;
+    }
+
     // TODO: leaving this method out for now - add it later
     // // EFFECTS: Returns mindset while writing of a journal entry
     // public String getMindsetWhileWriting() {
