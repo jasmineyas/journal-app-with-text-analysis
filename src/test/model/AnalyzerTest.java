@@ -2,6 +2,8 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.nio.file.NoSuchFileException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +37,7 @@ public class AnalyzerTest {
     }
 
     @Test
-    void testReadKeywordsFileInvalidFile() {
+    void testReadKeywordsFileInvalidFile() throws Exception {
         Set<String> result = analyzer.readKeywordsFromFile(INVALID_FILE);
         assertTrue(result.isEmpty());
     }
