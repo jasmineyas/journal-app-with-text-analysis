@@ -6,8 +6,8 @@ import java.util.Scanner;
 import javax.swing.SwingUtilities;
 
 /**
- * Main application class
- * modes.
+ * Simple journal app with text analysis that can run either with GUI or in
+ * console.
  */
 public class Main {
 
@@ -27,7 +27,7 @@ public class Main {
             } catch (FileNotFoundException e) {
                 System.out.println("Unable to run application: file not found");
             }
-        } 
+        }
 
         scanner.close();
 
