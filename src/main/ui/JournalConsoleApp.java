@@ -11,12 +11,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * JournalApp is a simple journal application with text analysis.
- * This is the console interface class.
+ * JournalConsoleApp is a simple journal application with text analysis with a
+ * console interface class.
  * Used JsonSerializationDemo project as reference for phase 2 implementation.
  */
 
-public class JournalApp {
+public class JournalConsoleApp {
     private Journal journal;
     private Scanner scanner;
     private String jsonStore;
@@ -25,7 +25,7 @@ public class JournalApp {
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private boolean isModified;
 
-    public JournalApp() throws FileNotFoundException {
+    public JournalConsoleApp() throws FileNotFoundException {
         this.scanner = new Scanner(System.in);
         this.journal = new Journal("Jasmine's journal");
         intiJournalApp();
