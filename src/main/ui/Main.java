@@ -15,7 +15,10 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        String appMode = appModeChooser(scanner);
+        // TODO: change it back - uncomment
+        // String appMode = appModeChooser(scanner);
+
+        String appMode = "GUI";
 
         if (appMode.equals("GUI")) {
             SwingUtilities.invokeLater(() -> {

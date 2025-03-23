@@ -42,6 +42,7 @@ public class BookshelfPanel extends JPanel {
 
         cardLayout = new CardLayout();
         mainContainer = new JPanel(cardLayout);
+        setOpaque(true);
 
         setupWelcomePanel();
         setupCreateJournalPanel();
@@ -58,6 +59,9 @@ public class BookshelfPanel extends JPanel {
 
     private void setupWelcomePanel() {
         welcomePanel = new JPanel();
+        welcomePanel.setBackground(Color.WHITE);
+        welcomePanel.setOpaque(true);
+
         welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
         welcomePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
@@ -80,6 +84,8 @@ public class BookshelfPanel extends JPanel {
 
         // Buttons panel
         JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setBackground(Color.RED); // TODO: super helpful to see what is what 
+        buttonsPanel.setOpaque(true);
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 0));
         buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -106,6 +112,8 @@ public class BookshelfPanel extends JPanel {
 
     private void setupCreateJournalPanel() {
         createJournalPanel = new JPanel();
+        createJournalPanel.setBackground(Color.BLUE);
+        createJournalPanel.setOpaque(true);
         createJournalPanel.setLayout(new BoxLayout(createJournalPanel, BoxLayout.Y_AXIS));
         createJournalPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
@@ -156,6 +164,8 @@ public class BookshelfPanel extends JPanel {
         });
 
         inputPanel.add(createButton);
+        inputPanel.setBackground(Color.RED);
+        inputPanel.setOpaque(true);
 
         createJournalPanel.add(inputPanel);
         createJournalPanel.add(Box.createVerticalGlue());
@@ -163,6 +173,8 @@ public class BookshelfPanel extends JPanel {
 
     private void setupLoadJournalPanel() {
         loadJournalPanel = new JPanel();
+        loadJournalPanel.setOpaque(true);
+        loadJournalPanel.setBackground(Color.WHITE);
         loadJournalPanel.setLayout(new BoxLayout(loadJournalPanel, BoxLayout.Y_AXIS));
         loadJournalPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
@@ -200,6 +212,8 @@ public class BookshelfPanel extends JPanel {
 
         SimpleTextField nameField = new SimpleTextField(20, 18, 200, 40);
         inputPanel.add(nameField);
+        inputPanel.setBackground(Color.WHITE);
+        inputPanel.setOpaque(true);
 
         SimpleButton loadButton = new SimpleButton("Load", Font.PLAIN, 20);
         loadButton.addActionListener(e -> {
