@@ -1,8 +1,8 @@
 package ui.screens;
 
 import ui.*;
-import ui.smallComponents.ComicSansButton;
-import ui.smallComponents.ConfirmationDialog;
+import ui.components.ComicSansButton;
+import ui.components.ConfirmationDialog;
 import model.*;
 import persistence.JsonWriter;
 
@@ -38,6 +38,13 @@ import javax.swing.event.PopupMenuListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumnModel;
 
+/**
+ * this class is responsible for displaying the journal entries in a table.
+ * It also allows the user to create, delete, and
+ * edit journal entries. It also allows the user to save the journal to a file.
+ * All via an action dropdown menu.
+ */
+
 public class JournalPanel extends JPanel {
     private JournalAppGUI mainApp;
     private Journal currentJournal;
@@ -58,6 +65,8 @@ public class JournalPanel extends JPanel {
         setupUI();
     }
 
+    // EFFECTS: sets up the UI for the journal panel
+    // Modifies: this
     public void setupUI() {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
@@ -80,6 +89,8 @@ public class JournalPanel extends JPanel {
         add(contentPanel, BorderLayout.CENTER);
     }
 
+    // EFFECTS: updates the view based on the current journal
+    // Modifies: this
     public void updateView() {
         if (currentJournal == null || currentJournal.getAllEntries().isEmpty()) {
             cardLayout.show(getContentPanel(), "EMPTY");
@@ -88,6 +99,9 @@ public class JournalPanel extends JPanel {
         }
     }
 
+    // EFFECTS: creates the header panel
+    // Modifies: this
+    @SuppressWarnings("methodlength")
     private JPanel createHeaderPanel() {
         headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(Color.WHITE);
@@ -170,6 +184,9 @@ public class JournalPanel extends JPanel {
         return headerPanel;
     }
 
+    // EFFECTS: deletes the selected entry from the journal;
+    // shows a message if no entry is selected;
+    // Modifies: this
     private void deleteSelectedEntry() {
         // Check if there's a selection
         int selectedRow = entriesTable.getSelectedRow();
@@ -209,6 +226,8 @@ public class JournalPanel extends JPanel {
         }
     }
 
+    // EFFECTS: saves the current journal to a file
+    // Modifies: this
     private void saveJournal() {
         try {
 
@@ -234,12 +253,16 @@ public class JournalPanel extends JPanel {
 
     }
 
-    public void updateHeader() {
+    // EFFECTS: updates the header with the current journal's name if it exists
+    // Modifies: this
+    public void updateJournalHeader() {
         if (currentJournal != null) {
             titleLabel.setText(currentJournal.getName());
         }
     }
 
+    // EFFECTS: creates the empty state panel
+    // Modifies: this
     private void createEmptyStatePanel() {
         emptyStatePanel = new JPanel();
         emptyStatePanel.setLayout(new BoxLayout(emptyStatePanel, BoxLayout.Y_AXIS));
@@ -270,6 +293,9 @@ public class JournalPanel extends JPanel {
         emptyStatePanel.add(Box.createVerticalGlue());
     }
 
+    // Effects: creates the entries table panel
+    // Modifies: this
+    @SuppressWarnings("methodlength")
     private void createEntriesTablePanel() {
         entriesTablePanel = new JPanel(new BorderLayout());
         entriesTablePanel.setBackground(Color.WHITE);
@@ -329,11 +355,14 @@ public class JournalPanel extends JPanel {
         });
     }
 
-    // Using private class here as we don't need this anywhere else
+    // This is a private class for the table we need to use for the table view
+    // as we don't need this anywhere else
     private class JournalEntriesTableModel extends AbstractTableModel {
         private String[] columnNames = { "Created date", "Preview", "Last Updated" };
         private List<JournalEntry> entries = new ArrayList<>();
 
+        // EFFECTS: refreshes the data in the table model
+        // Modifies: this
         public void refreshData() {
             if (currentJournal != null) {
                 entries = new ArrayList<>(currentJournal.getAllEntries().values());
@@ -381,13 +410,15 @@ public class JournalPanel extends JPanel {
         }
     }
 
+    // EFFECTS: sets the current journal and updates the journal header and view
+    // Modifies: this
     public void setJournal(Journal journal) {
         this.currentJournal = journal;
         if (entriesTable != null) {
             JournalEntriesTableModel model = (JournalEntriesTableModel) entriesTable.getModel();
             model.refreshData();
         }
-        updateHeader();
+        updateJournalHeader();
         updateView();
     }
 

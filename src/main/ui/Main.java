@@ -35,6 +35,7 @@ public class Main {
 
     }
 
+    // Effects: prompts user to choose application mode and returns the choice
     public static String appModeChooser(Scanner scanner) {
 
         System.out.println("Select application mode for simple journal app:");

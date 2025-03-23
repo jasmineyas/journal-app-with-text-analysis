@@ -1,8 +1,12 @@
-package ui.smallComponents;
+package ui.components;
 
 import java.awt.*;
 
 import javax.swing.JTextField;
+
+/** 
+ * ComicSansTextField class is a JTextField that has CUTE Comic Sans MS font.
+*/
 
 public class ComicSansTextField extends JTextField {
 

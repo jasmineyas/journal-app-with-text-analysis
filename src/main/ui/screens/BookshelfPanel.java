@@ -1,8 +1,8 @@
 package ui.screens;
 
 import ui.*;
-import ui.smallComponents.ComicSansButton;
-import ui.smallComponents.ComicSansTextField;
+import ui.components.ComicSansButton;
+import ui.components.ComicSansTextField;
 
 import java.awt.*;
 import java.io.IOException;
@@ -19,6 +19,12 @@ import javax.swing.JPanel;
 import model.Journal;
 import persistence.JsonReader;
 
+/**
+ * This class represents the main panel that user will see when opening the
+ * GUI.. It contains two screens where users can create a new journal or load an
+ * existing journal.
+ */
+
 public class BookshelfPanel extends JPanel {
     private JournalAppGUI mainApp;
     private CardLayout cardLayout;
@@ -32,9 +38,10 @@ public class BookshelfPanel extends JPanel {
     public BookshelfPanel(JournalAppGUI mainApp) {
         this.mainApp = mainApp;
         setupUI();
-
     }
 
+    // EFFECTS: sets up the main UI of the bookshelf panel
+    // MODIFY: this
     private void setupUI() {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
@@ -57,6 +64,9 @@ public class BookshelfPanel extends JPanel {
         cardLayout.show(mainContainer, "WELCOME");
     }
 
+    // EFFECTS: sets up the welcome panel
+    // MODIFY: this
+    @SuppressWarnings("methodlength")
     private void setupWelcomePanel() {
         welcomePanel = new JPanel();
         welcomePanel.setBackground(Color.WHITE);
@@ -84,7 +94,7 @@ public class BookshelfPanel extends JPanel {
 
         // Buttons panel
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBackground(Color.WHITE); 
+        buttonsPanel.setBackground(Color.WHITE);
         buttonsPanel.setOpaque(true);
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 0));
         buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -103,6 +113,9 @@ public class BookshelfPanel extends JPanel {
         welcomePanel.add(Box.createVerticalGlue());
     }
 
+    // EFFECTS: sets up the create journal panel
+    // MODIFY: this
+    @SuppressWarnings("methodlength")
     private void setupCreateJournalPanel() {
         createJournalPanel = new JPanel();
         createJournalPanel.setBackground(Color.WHITE);
@@ -177,6 +190,9 @@ public class BookshelfPanel extends JPanel {
         createJournalPanel.add(Box.createVerticalGlue());
     }
 
+    // EFFECTS: sets up the load journal panel
+    // MODIFY: this
+    @SuppressWarnings("methodlength")
     private void setupLoadJournalPanel() {
         loadJournalPanel = new JPanel();
         loadJournalPanel.setOpaque(true);

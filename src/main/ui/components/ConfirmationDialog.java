@@ -1,4 +1,4 @@
-package ui.smallComponents;
+package ui.components;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -17,6 +17,7 @@ public class ConfirmationDialog extends JDialog {
 
     private boolean confirmed = false;
 
+    @SuppressWarnings("methodlength")
     public ConfirmationDialog(
             JFrame parent,
             String title,

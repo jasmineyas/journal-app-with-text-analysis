@@ -1,8 +1,8 @@
 package ui.screens;
 
 import ui.*;
-import ui.smallComponents.ComicSansButton;
-import ui.smallComponents.ComicSansLabel;
+import ui.components.ComicSansButton;
+import ui.components.ComicSansLabel;
 import model.*;
 
 import java.awt.BorderLayout;
@@ -24,6 +24,14 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+/**
+ * This class represents the panel that displays the journal entry, and it
+ * contains two modes: view mode and edit mode.
+ * In view mode, the user can see the content of the journal entry and some
+ * insights about it.
+ * In edit mode, the user can edit the content of the journal entry.
+ */
 
 public class EntryPanel extends JPanel {
     private JournalAppGUI mainApp;
@@ -51,6 +59,8 @@ public class EntryPanel extends JPanel {
         setupUI();
     }
 
+    // EFFECTS: Create the UI for the panel
+    // MODIFIES: this
     public void setupUI() {
         cardLayout = new CardLayout();
         setLayout(cardLayout);
@@ -64,18 +74,24 @@ public class EntryPanel extends JPanel {
         add(viewPanel, "VIEW");
     }
 
+    // EFFECTS: Update the view panel and show the entry in view mode
+    // MODIFIES: this
     public void showEntry(JournalEntry entry) {
         this.currentEntry = entry;
         updateViewPanel(); // Update the view panel with entry content
         cardLayout.show(this, "VIEW");
     }
 
+    // EFFECTS: update the edit panel and show the entry in edit mode
+    // MODIFIES: this
     public void editEntry() {
         updateEditPanel(); // Pre-fill the edit panel with entry content
         cardLayout.show(this, "EDIT");
     }
 
-    // passed on from other panel;
+    // EFFECTS: Set the current entry and isNewEntry (passed on from other panel),
+    // and decide which mode to show
+    // MODIFIES: this
     public void setEntry(JournalEntry entry, Boolean isNewEntry) {
         this.isNewEntry = isNewEntry;
         this.currentEntry = entry;
@@ -92,11 +108,14 @@ public class EntryPanel extends JPanel {
 
     }
 
+    // EFFECTS: Set the current journal
+    // MODIFIES: this
     public void setJournal(Journal journal) {
         this.currentJournal = journal;
     }
 
-    // Save the current entry and switch to view mode
+    // Effects: Save the current entry and switch to view mode
+    // Modifies: this
     public void saveEntry() {
         String content = contentEditArea.getText();
 
@@ -115,6 +134,9 @@ public class EntryPanel extends JPanel {
         cardLayout.show(this, "VIEW");
     }
 
+    // EFFECTS: Create the edit panel
+    // MODIFIES: this
+    @SuppressWarnings("methodlength")
     private void createEditPanel() {
         editPanel = new JPanel();
         editPanel.setLayout(new BorderLayout());
@@ -162,6 +184,10 @@ public class EntryPanel extends JPanel {
         cardLayout.show(this, "VIEW");
     }
 
+    // EFFECTS: Create the view panel
+    // MODIFIES: this
+
+    @SuppressWarnings("methodlength")
     private void createViewPanel() {
         viewPanel = new JPanel(new BorderLayout());
         viewPanel.setBackground(Color.WHITE);
@@ -246,17 +272,17 @@ public class EntryPanel extends JPanel {
         insightPanel.setOpaque(false);
         insightPanel.setBounds(0, 0, 600, 150);
 
-        moodLabel = new ComicSansLabel("Mood: " +
-                (currentEntry == null ? "placeHolder" : currentEntry.getOverallMood()),
+        moodLabel = new ComicSansLabel("Mood: "
+                + (currentEntry == null ? "placeHolder" : currentEntry.getOverallMood()),
                 Font.PLAIN, 18);
-        timeLabel = new ComicSansLabel("Time orientation: " +
-                (currentEntry == null ? "placeHolder" : currentEntry.getTimeOrientation()),
+        timeLabel = new ComicSansLabel("Time orientation: "
+                + (currentEntry == null ? "placeHolder" : currentEntry.getTimeOrientation()),
                 Font.PLAIN, 18);
-        senseLabel = new ComicSansLabel("Primary Sense: " +
-                (currentEntry == null ? "placeHolder" : currentEntry.getPrimarySense()),
+        senseLabel = new ComicSansLabel("Primary Sense: "
+                + (currentEntry == null ? "placeHolder" : currentEntry.getPrimarySense()),
                 Font.PLAIN, 18);
-        perspectiveLabel = new ComicSansLabel("Perspective: " +
-                (currentEntry == null ? "placeHolder" : currentEntry.getUsAndThem()),
+        perspectiveLabel = new ComicSansLabel("Perspective: "
+                + (currentEntry == null ? "placeHolder" : currentEntry.getUsAndThem()),
                 Font.PLAIN, 18);
 
         insightPanel.add(moodLabel);
@@ -270,7 +296,8 @@ public class EntryPanel extends JPanel {
         viewPanel.add(layeredPane, BorderLayout.SOUTH);
     }
 
-    // Update the view panel with current entry data
+    // Effects: Update the view panel with current entry data
+    // Modifies: this
     private void updateViewPanel() {
         if (currentEntry != null) {
             viewHeader.setText(currentEntry.getCreatedTime().toString());
@@ -282,7 +309,8 @@ public class EntryPanel extends JPanel {
         }
     }
 
-    // Update the edit panel with current entry data
+    // Effects: Update the edit panel with current entry data
+    // Modifies: this
     private void updateEditPanel() {
         for (ActionListener al : cancelEditButton.getActionListeners()) {
             cancelEditButton.removeActionListener(al);

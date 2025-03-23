@@ -11,6 +11,10 @@ import ui.screens.JournalPanel;
 
 import java.awt.*;
 
+/**
+ * JournalAppGUI class is the main GUI class for the journal app. 
+ */
+
 public class JournalAppGUI extends JFrame {
     private CardLayout cardLayout;
     private JPanel mainPanel;
@@ -44,16 +48,21 @@ public class JournalAppGUI extends JFrame {
 
     }
 
+    // Effects: shows the bookshelf panel
     public void showBookshelf() {
         cardLayout.show(mainPanel, "BOOKSHELF");
     }
-
+    
+    // Effects: shows the journal panel and sets the current journal
+    // Modifies: this
     public void showJournal(Journal journal) {
         this.currentJournal = journal;
         journalPanel.setJournal(journal);
         cardLayout.show(mainPanel, "JOURNAL");
     }
 
+    // Effects: shows the entry panel and sets the current entry
+    // Modifies: this
     public void showEntry(JournalEntry entry, Boolean isNewEntry) {
         entryPanel.setEntry(entry, isNewEntry);
         entryPanel.setJournal(this.currentJournal);
