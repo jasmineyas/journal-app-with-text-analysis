@@ -11,6 +11,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.datatransfer.FlavorListener;
@@ -87,12 +88,25 @@ public class JournalPanel extends JPanel {
 
     private JPanel createHeaderPanel() {
         headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(Color.PINK);
-        // headerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
-        headerPanel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
+        headerPanel.setBackground(Color.WHITE);
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
-        // TODO: this is hardcoded right now!! Need to put the actual data value in
-        // here.
+        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, -20, 0));
+        backButtonPanel.setBackground(Color.WHITE);
+        backButtonPanel.setOpaque(true);
+
+        JButton backButton = new JButton("< back");
+        backButton.setFont(new Font("Comic Sans Ms", Font.PLAIN, 18));
+        backButton.setBorderPainted(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setForeground(Color.GRAY);
+        backButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        backButton.addActionListener(e -> mainApp.showBookshelf());
+        backButtonPanel.add(backButton);
+
+        headerPanel.add(backButtonPanel, BorderLayout.NORTH);
+
         titleLabel = new JLabel("placeHolderText");
         titleLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
         headerPanel.add(titleLabel, BorderLayout.WEST);
@@ -200,7 +214,7 @@ public class JournalPanel extends JPanel {
     private void createEmptyStatePanel() {
         emptyStatePanel = new JPanel();
         emptyStatePanel.setLayout(new BoxLayout(emptyStatePanel, BoxLayout.Y_AXIS));
-        emptyStatePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        emptyStatePanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 30, 20));
         emptyStatePanel.setBackground(Color.WHITE);
 
         // Add vertical space at the top
@@ -208,7 +222,7 @@ public class JournalPanel extends JPanel {
 
         // Image
         ImageIcon rawEmptyImage = new ImageIcon("src/main/ui/screens/empty-journal.png");
-        Image scaledImage = rawEmptyImage.getImage().getScaledInstance((int) (872 / 1.5), (int) (744 / 1.5),
+        Image scaledImage = rawEmptyImage.getImage().getScaledInstance((int) (872 / 1.6), (int) (744 / 1.6),
                 Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         JLabel emptyImage = new JLabel(resizedIcon);
@@ -217,10 +231,10 @@ public class JournalPanel extends JPanel {
 
         // Text
         JLabel emptyText = new JLabel(
-                "No journal entries to show.... click Actions button on the top right to create a journal entry");
+                "No journal entries to show. Click Actions button on the top right to create a new journal entry.");
         emptyText.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
         emptyText.setAlignmentX(Component.CENTER_ALIGNMENT);
-        emptyStatePanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        emptyStatePanel.add(Box.createRigidArea(new Dimension(0, 30)));
         emptyStatePanel.add(emptyText);
 
         // Add vertical space at the bottom
@@ -238,7 +252,7 @@ public class JournalPanel extends JPanel {
 
         // add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(entriesTable);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(20, 40, 40, 40));
         entriesTablePanel.add(scrollPane, BorderLayout.CENTER);
 
         if (currentJournal != null) {

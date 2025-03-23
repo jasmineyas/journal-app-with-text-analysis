@@ -88,7 +88,7 @@ public class BookshelfPanel extends JPanel {
 
         // Buttons panel
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBackground(Color.RED); // TODO: super helpful to see what is what
+        buttonsPanel.setBackground(Color.WHITE); // TODO: super helpful to see what is what
         buttonsPanel.setOpaque(true);
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 0));
         buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -116,28 +116,35 @@ public class BookshelfPanel extends JPanel {
 
     private void setupCreateJournalPanel() {
         createJournalPanel = new JPanel();
-        createJournalPanel.setBackground(Color.PINK);
+        createJournalPanel.setBackground(Color.WHITE);
         createJournalPanel.setOpaque(true);
         createJournalPanel.setLayout(new BoxLayout(createJournalPanel, BoxLayout.Y_AXIS));
         createJournalPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Back button
-        JButton backButton = new JButton("< back to bookshelf");
-        backButton.setFont(new Font("Comic Sans Ms", Font.PLAIN, 15));
+        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        backButtonPanel.setBackground(Color.WHITE);
+        backButtonPanel.setOpaque(true);
+
+        JButton backButton = new JButton("< back");
+        backButton.setFont(new Font("Comic Sans Ms", Font.PLAIN, 18));
         backButton.setBorderPainted(false);
         backButton.setContentAreaFilled(false);
         backButton.setForeground(Color.GRAY);
         backButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         backButton.addActionListener(e -> cardLayout.show(mainContainer, "WELCOME"));
-        createJournalPanel.add(backButton);
+        backButtonPanel.add(backButton);
+
+        createJournalPanel.add(backButtonPanel);
 
         // Add some spacing at the top
         createJournalPanel.add(Box.createVerticalGlue());
 
         ImageIcon rawNewJournalImage = new ImageIcon("src/main/ui/screens/new-journal.png");
         Image scaledImage = rawNewJournalImage.getImage().getScaledInstance(
-                (int) (rawNewJournalImage.getIconWidth() / 1.1),
-                (int) (rawNewJournalImage.getIconHeight() / 1.1),
+                (int) (rawNewJournalImage.getIconWidth() / 1.2),
+                (int) (rawNewJournalImage.getIconHeight() / 1.2),
                 Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         JLabel emptyImage = new JLabel(resizedIcon);
@@ -152,7 +159,7 @@ public class BookshelfPanel extends JPanel {
         createLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         createJournalPanel.add(createLabel);
 
-        createJournalPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+        createJournalPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         // Input field and create button panel
         JPanel inputPanel = new JPanel();
@@ -172,10 +179,12 @@ public class BookshelfPanel extends JPanel {
         });
 
         inputPanel.add(createButton);
-        inputPanel.setBackground(Color.RED);
+        inputPanel.setBackground(Color.WHITE);
         inputPanel.setOpaque(true);
 
         createJournalPanel.add(inputPanel);
+        createJournalPanel.add(Box.createVerticalGlue());
+        createJournalPanel.add(Box.createVerticalGlue());
         createJournalPanel.add(Box.createVerticalGlue());
     }
 
@@ -187,22 +196,29 @@ public class BookshelfPanel extends JPanel {
         loadJournalPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Back button
-        JButton backButton = new JButton("< back to bookshelf");
-        backButton.setFont(new Font("Comic Sans Ms", Font.PLAIN, 15));
+        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        backButtonPanel.setBackground(Color.WHITE);
+        backButtonPanel.setOpaque(true);
+
+        JButton backButton = new JButton("< back");
+        backButton.setFont(new Font("Comic Sans Ms", Font.PLAIN, 18));
         backButton.setBorderPainted(false);
         backButton.setContentAreaFilled(false);
         backButton.setForeground(Color.GRAY);
         backButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         backButton.addActionListener(e -> cardLayout.show(mainContainer, "WELCOME"));
-        loadJournalPanel.add(backButton);
+        backButtonPanel.add(backButton);
+
+        loadJournalPanel.add(backButtonPanel);
 
         loadJournalPanel.add(Box.createVerticalGlue());
 
         // TODO: replace image
         ImageIcon rawLoadJournalImage = new ImageIcon("src/main/ui/screens/load-journal.png");
         Image scaledImage = rawLoadJournalImage.getImage().getScaledInstance(
-                (int) (rawLoadJournalImage.getIconWidth() / 1.3),
-                (int) (rawLoadJournalImage.getIconHeight() / 1.3),
+                (int) (rawLoadJournalImage.getIconWidth() / 1.4),
+                (int) (rawLoadJournalImage.getIconHeight() / 1.4),
                 Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         JLabel loadJournalImage = new JLabel(resizedIcon);
@@ -249,6 +265,8 @@ public class BookshelfPanel extends JPanel {
         inputPanel.add(loadButton);
 
         loadJournalPanel.add(inputPanel);
+        loadJournalPanel.add(Box.createVerticalGlue());
+        loadJournalPanel.add(Box.createVerticalGlue());
         loadJournalPanel.add(Box.createVerticalGlue());
     }
 }

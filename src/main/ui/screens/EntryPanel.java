@@ -8,8 +8,11 @@ import model.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -17,9 +20,11 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 public class EntryPanel extends JPanel {
@@ -41,6 +46,7 @@ public class EntryPanel extends JPanel {
 
     private JLabel editModeHeader;
     private JLabel viewHeader;
+    private ComicSansButton cancelEditButton;
 
     public EntryPanel(JournalAppGUI mainApp) {
         this.mainApp = mainApp;
@@ -130,7 +136,7 @@ public class EntryPanel extends JPanel {
 
         editPanel.add(headerPanel, BorderLayout.NORTH);
 
-        contentEditArea = new JTextArea(600, 350);
+        contentEditArea = new JTextArea();
         contentEditArea.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
         contentEditArea.setLineWrap(true);
         contentEditArea.setWrapStyleWord(true);
@@ -141,32 +147,49 @@ public class EntryPanel extends JPanel {
 
         editPanel.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel buttonPanel = new JPanel(new BorderLayout());
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
         buttonPanel.setBackground(Color.WHITE);
         ComicSansButton saveButton = new ComicSansButton("Save", Font.PLAIN, 20);
         saveButton.addActionListener(e -> saveEntry());
-        buttonPanel.add(saveButton, BorderLayout.EAST);
-        editPanel.add(buttonPanel, BorderLayout.SOUTH);
 
+        cancelEditButton = new ComicSansButton("Cancel", Font.PLAIN, 20);
+        buttonPanel.add(cancelEditButton);
+        buttonPanel.add(saveButton);
+        editPanel.add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    private void showViewPanel() {
+        cardLayout.show(this, "VIEW");
     }
 
     private void createViewPanel() {
-        viewPanel = new JPanel();
+        viewPanel = new JPanel(new BorderLayout());
         viewPanel.setBackground(Color.WHITE);
         viewPanel.setOpaque(true);
+        viewPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+
+        JPanel northPanel = new JPanel();
+        northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+        northPanel.setBackground(Color.WHITE);
+
+        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, -20, 0));
+        backButtonPanel.setBackground(Color.WHITE);
+        backButtonPanel.setOpaque(true);
 
         JButton backButton = new JButton("< back to journal");
-        backButton.setFont(new Font("Comic Sans Ms", Font.PLAIN, 15));
+        backButton.setFont(new Font("Comic Sans Ms", Font.PLAIN, 18));
         backButton.setBorderPainted(false);
         backButton.setContentAreaFilled(false);
         backButton.setForeground(Color.GRAY);
+        backButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         backButton.addActionListener(e -> mainApp.showJournal(currentJournal));
-        viewPanel.add(backButton);
+        backButtonPanel.add(backButton);
 
         JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(Color.RED);
+        headerPanel.setBackground(Color.WHITE);
         headerPanel.setOpaque(true);
 
         viewHeader = new JLabel(currentEntry == null ? "placeHolder" : currentEntry.getCreatedTime().toString());
@@ -177,53 +200,75 @@ public class EntryPanel extends JPanel {
         editButton.addActionListener(e -> editEntry());
         headerPanel.add(editButton, BorderLayout.EAST);
 
-        viewPanel.add(headerPanel, BorderLayout.NORTH);
+        northPanel.add(backButtonPanel);
+        northPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        northPanel.add(headerPanel);
+        northPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        viewPanel.add(northPanel, BorderLayout.NORTH);
 
         JPanel contentPanel = new JPanel(new BorderLayout());
-        contentPanel.setBackground(Color.WHITE);
+        contentPanel.setBackground(Color.PINK);
         contentPanel.setOpaque(true);
 
-        contentDisplay = new JTextArea(currentEntry == null ? "placeHolder" : currentEntry.getContent());
+        contentDisplay = new JTextArea(currentEntry == null ? "empty journal content" : currentEntry.getContent());
         contentDisplay.setEditable(false);
-        contentDisplay.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+        contentDisplay.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
         contentDisplay.setLineWrap(true);
         contentDisplay.setWrapStyleWord(true);
         contentDisplay.setOpaque(false); // make it blend with background
         contentDisplay.setFocusable(false); // no focus outline
-        contentDisplay.setBorder(null); // no border
+        contentDisplay.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JScrollPane scrollPane = new JScrollPane(contentDisplay);
+        Dimension fixedSize = new Dimension(600, 300);
+        scrollPane.setPreferredSize(fixedSize);
+        scrollPane.setMinimumSize(fixedSize);
+        scrollPane.setMaximumSize(fixedSize);
+
+        scrollPane.setBackground(Color.decode("#f5f7f9"));
         scrollPane.setBorder(null);
-        scrollPane.setOpaque(false);
+        scrollPane.setOpaque(true);
         scrollPane.getViewport().setOpaque(false);
         contentPanel.add(scrollPane, BorderLayout.CENTER);
 
         viewPanel.add(contentPanel, BorderLayout.CENTER);
 
-        ImageIcon cloudIcon = new ImageIcon("src/main/ui/screens/test.png");
-        JLabel backgroundLabel = new JLabel(cloudIcon);
-        backgroundLabel.setLayout(new BoxLayout(backgroundLabel, BoxLayout.Y_AXIS)); // allow stacking text
-        backgroundLabel.setPreferredSize(new Dimension(cloudIcon.getIconWidth(), cloudIcon.getIconHeight()));
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(new Dimension(600, 150));
+
+        ImageIcon backgroundImageIcon = new ImageIcon("src/main/ui/screens/test.png");
+        JLabel backgroundLabel = new JLabel(backgroundImageIcon);
+        backgroundLabel.setBounds(50, 0, backgroundImageIcon.getIconWidth(), backgroundImageIcon.getIconHeight());
+
+        JPanel insightPanel = new JPanel();
+        insightPanel.setLayout(new BoxLayout(insightPanel, BoxLayout.Y_AXIS));
+        insightPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        insightPanel.setOpaque(false);
+        insightPanel.setBounds(0, 0, 600, 150);
 
         moodLabel = new ComicSansLabel("Mood: " +
                 (currentEntry == null ? "placeHolder" : currentEntry.getOverallMood()),
-                Font.PLAIN, 15);
+                Font.PLAIN, 18);
         timeLabel = new ComicSansLabel("Time orientation: " +
                 (currentEntry == null ? "placeHolder" : currentEntry.getTimeOrientation()),
-                Font.PLAIN, 15);
+                Font.PLAIN, 18);
         senseLabel = new ComicSansLabel("Primary Sense: " +
                 (currentEntry == null ? "placeHolder" : currentEntry.getPrimarySense()),
-                Font.PLAIN, 15);
+                Font.PLAIN, 18);
         perspectiveLabel = new ComicSansLabel("Perspective: " +
                 (currentEntry == null ? "placeHolder" : currentEntry.getUsAndThem()),
-                Font.PLAIN, 15);
+                Font.PLAIN, 18);
 
-        backgroundLabel.add(moodLabel);
-        backgroundLabel.add(timeLabel);
-        backgroundLabel.add(senseLabel);
-        backgroundLabel.add(perspectiveLabel);
+        insightPanel.add(moodLabel);
+        insightPanel.add(timeLabel);
+        insightPanel.add(senseLabel);
+        insightPanel.add(perspectiveLabel);
 
-        contentPanel.add(backgroundLabel, BorderLayout.SOUTH);
+        layeredPane.add(backgroundLabel, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(insightPanel, JLayeredPane.PALETTE_LAYER);
+
+        viewPanel.add(layeredPane, BorderLayout.SOUTH);
     }
 
     // Update the view panel with current entry data
@@ -240,13 +285,17 @@ public class EntryPanel extends JPanel {
 
     // Update the edit panel with current entry data
     private void updateEditPanel() {
+        for (ActionListener al : cancelEditButton.getActionListeners()) {
+            cancelEditButton.removeActionListener(al);
+        }
         if (!isNewEntry && currentEntry != null) {
             editModeHeader.setText("Edit journal entry");
             contentEditArea.setText(currentEntry.getContent());
+            cancelEditButton.addActionListener(e -> showViewPanel());
         } else {
             editModeHeader.setText("Create new entry");
             contentEditArea.setText("");
+            cancelEditButton.addActionListener(e -> mainApp.showJournal(currentJournal));
         }
     }
-
 }
