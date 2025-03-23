@@ -86,7 +86,7 @@ public class JournalPanel extends JPanel {
     private JPanel createHeaderPanel() {
         headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(Color.PINK);
-        headerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+        // headerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
         headerPanel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
 
         // TODO: this is hardcoded right now!! Need to put the actual data value in
@@ -106,23 +106,17 @@ public class JournalPanel extends JPanel {
         actionsMenu = new JPopupMenu();
         JMenuItem createItem = new JMenuItem("Create");
         JMenuItem deleteItem = new JMenuItem("Delete");
-
         JSeparator separator = new JSeparator();
-
         JMenuItem save = new JMenuItem("Save");
-        JMenuItem quit = new JMenuItem("Quit");
 
         actionsMenu.add(createItem);
         actionsMenu.add(deleteItem);
         actionsMenu.add(separator);
         actionsMenu.add(save);
-        actionsMenu.add(quit);
 
         createItem.addActionListener(e -> mainApp.showEntry(new JournalEntry(""), true));
         deleteItem.addActionListener(e -> deleteSelectedEntry());
         save.addActionListener(e -> saveJournal());
-        quit.addActionListener(e -> System.exit(0));
-        // TODO: add other event listeners
 
         // show menu when actions button is clicked?
         actionsButton.addActionListener(e -> {

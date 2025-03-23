@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -19,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.border.Border;
 
 public class EntryPanel extends JPanel {
     private JournalAppGUI mainApp;
@@ -37,7 +39,7 @@ public class EntryPanel extends JPanel {
     private JLabel senseLabel;
     private JLabel perspectiveLabel;
 
-    private JLabel editHeader;
+    private JLabel editModeHeader;
 
     public EntryPanel(JournalAppGUI mainApp) {
         this.mainApp = mainApp;
@@ -110,20 +112,22 @@ public class EntryPanel extends JPanel {
 
     private void createEditPanel() {
         editPanel = new JPanel();
-        editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
-        editPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+        editPanel.setLayout(new BorderLayout());
+        editPanel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
         editPanel.setBackground(Color.WHITE);
         editPanel.setOpaque(true);
 
-        JPanel headerPanel = new JPanel();
-        editHeader = new JLabel((isNewEntry == null || isNewEntry) ? "New journal entry" : "Edit journal entry");
-        editHeader.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
-        headerPanel.add(editHeader);
-        headerPanel.setAlignmentX(CENTER_ALIGNMENT);
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setBackground(Color.WHITE);
+        headerPanel.setOpaque(true);
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+        editModeHeader = new JLabel((isNewEntry == null || isNewEntry) ? "New journal entry" : "Edit journal entry");
+        editModeHeader.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
+        editModeHeader.setBackground(Color.WHITE);
+        editModeHeader.setOpaque(true);
+        headerPanel.add(editModeHeader, BorderLayout.WEST);
 
-        editPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-        editPanel.add(headerPanel);
-        editPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        editPanel.add(headerPanel, BorderLayout.NORTH);
 
         contentEditArea = new JTextArea(600, 350);
         contentEditArea.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
@@ -132,18 +136,18 @@ public class EntryPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(contentEditArea);
         scrollPane.setPreferredSize(new Dimension(500, 300));
-        scrollPane.setAlignmentX(CENTER_ALIGNMENT);
-        editPanel.add(scrollPane);
 
-        editPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        editPanel.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+
         buttonPanel.setBackground(Color.WHITE);
         ComicSansButton saveButton = new ComicSansButton("Save", Font.PLAIN, 20);
-        saveButton.setAlignmentX(CENTER_ALIGNMENT); // TODO: fix this panel
         saveButton.addActionListener(e -> saveEntry());
-        buttonPanel.add(saveButton);
-        editPanel.add(buttonPanel);
+        buttonPanel.add(saveButton, BorderLayout.EAST);
+        editPanel.add(buttonPanel, BorderLayout.SOUTH);
+
     }
 
     private void createViewPanel() {
@@ -234,10 +238,10 @@ public class EntryPanel extends JPanel {
     // Update the edit panel with current entry data
     private void updateEditPanel() {
         if (!isNewEntry && currentEntry != null) {
-            editHeader.setText("Edit journal entry");
+            editModeHeader.setText("Edit journal entry");
             contentEditArea.setText(currentEntry.getContent());
         } else {
-            editHeader.setText("Create new entry");
+            editModeHeader.setText("Create new entry");
             contentEditArea.setText("");
         }
     }
