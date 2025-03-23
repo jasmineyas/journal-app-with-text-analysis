@@ -67,7 +67,7 @@ public class Journal implements Writable {
         return deleteEntry(dateTime);
     }
 
-    // TODO: I don't care about last updated date yet - could add in the future
+    // (I don't care about last updated date yet - could add in the future - added in GUI not console) 
     // EFFECTS: Returns all entries formatted in date time - entry preview format
     public String formatAllEntries() {
         StringBuilder entries = new StringBuilder();
