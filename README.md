@@ -2,6 +2,8 @@
 # Journaling app with text analysis 
 Course project for CPSC 210 at the University of British Columbia 
 
+![alt text](image.png)
+
 ## About the project
 
 ### What is this? 
@@ -29,10 +31,13 @@ I understand that implementing a robust text analysis algorithm is ambitious, so
 - [The Secret Life of Pronouns: Flexibility in Writing Style and Physical Health](https://journals.sagepub.com/doi/10.1111/1467-9280.01419), by R. Sherlock Campbell and James W. Pennebaker, Psychological Science, 2003. 
 - [Psychological Aspects of Natural Language Use: Our Words, Our Selves](http://cognaction.org/cogs105/readings/LIWC.pdf), by James W. Pennebaker, Matthias R. Mehl, and Kate G. Niederhoffer, Annual Review of Psychology, 2003. 
 
+
+## Mock-up for GUI
+[Click here to view the design mock-ups for the app](https://www.tldraw.com/p/jFglMOsh4VRXvB9Vza7SG?d=v-292.1950.5431.3330.page). Used tldraw;. 
+
+![alt text](image-6.png)
+
 ## User stories
-
-### Phase 0
-
 
 **Persistence** 
 
@@ -54,9 +59,22 @@ I understand that implementing a robust text analysis algorithm is ambitious, so
 **Text analysis** 
 
 - As a user, I want to view the text analysis of a specific journal entry so that I can gain insights into my mood and focus for that entry
-- As a user, I want to see overall statistics across all my journal entries so that I can track trends in my writing over time.
 
-## Thoughts dump 
-* Relying on the user's computer security control so i am not thinking about adding password protection. Assuming that the user will keep their laptop secure. However, password-control could be added if there's time. 
-* Relying on the user's operating system for quick-hide functionality (quickly hide away the application). For example, on mac, users can use command-H to quickly hide the active application.  
-* Relying on the user's ability to navigate file systems for exporting entries. Would like to provide a location path so the user can navigate there and see their entry records. 
+## Instructions for End User (GUI)
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by viewing all the journal entries added on the journal page. 
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by creating and adding a new journal entry to the journal with the "create" button inside the action button drop down. 
+- You can generate the third required action related to the user story "adding multiple Xs to a Y" by deleting a selected journal entry to the journal with the "delete" button inside the action button drop down. 
+- You can locate my visual component on welcome screen, create new journal screen, load journal screen, as well as empty journal screen and view journal entry screen.  
+- You can save the state of my application by selecting the "save" button inside the action button drop down. 
+- You can reload the state of my application by selecting loading an existing journal on the welcome screen and inputting the name of the journal you are looking for in the journal name input. 
+
+## Thoughts dump (user stories)
+- Relying on the user's computer security control so i am not thinking about adding password protection. Assuming that the user will keep their laptop secure. However, password-control could be added if there's time. 
+- Relying on the user's operating system for quick-hide functionality (quickly hide away the application). For example, on mac, users can use command-H to quickly hide the active application.  
+- Relying on the user's ability to navigate file systems for exporting entries. Would like to provide a location path so the user can navigate there and see their entry records. 
+
+## Thoughts dump (to-dos)
+- (not implemented) As a user, I want to see overall statistics across all my journal entries so that I can track trends in my writing over time.
+- Would be nice to have more robust text analysis. 
+- Would be nice to have charts. 
+- Did not implement the name check for "create new journal" - could be added in the future. 

@@ -236,7 +236,7 @@ public class EntryPanel extends JPanel {
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(600, 150));
 
-        ImageIcon backgroundImageIcon = new ImageIcon("src/main/ui/screens/test.png");
+        ImageIcon backgroundImageIcon = new ImageIcon("src/main/ui/screens/insight-image.png");
         JLabel backgroundLabel = new JLabel(backgroundImageIcon);
         backgroundLabel.setBounds(50, 0, backgroundImageIcon.getIconWidth(), backgroundImageIcon.getIconHeight());
 
