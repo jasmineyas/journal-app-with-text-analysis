@@ -14,7 +14,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.datatransfer.FlavorListener;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +33,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.table.AbstractTableModel;
 
 public class JournalPanel extends JPanel {
@@ -111,19 +112,26 @@ public class JournalPanel extends JPanel {
         titleLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
         headerPanel.add(titleLabel, BorderLayout.WEST);
 
-        // TODO: need to update the icon here the downward rectangle....
+        // TODO: need to make it so that when the drop down is open... the text is
+        // "Actions ▲"
         actionsButton = new ComicSansButton("Actions ▼", Font.BOLD, 24);
         headerPanel.add(actionsButton, BorderLayout.EAST);
 
-        // TODO: need to add icon here... but let's see if this one works first.
-        // TODO: need to check if we can make the drop down width match the button width
-        // :D
-        // TODO: also update the font
         actionsMenu = new JPopupMenu();
+        Font menuFont = new Font("Comic Sans MS", Font.PLAIN, 18);
+        Dimension paddedSize = new Dimension(160, 30);
         JMenuItem createItem = new JMenuItem("Create");
         JMenuItem deleteItem = new JMenuItem("Delete");
         JSeparator separator = new JSeparator();
         JMenuItem save = new JMenuItem("Save");
+
+        createItem.setFont(menuFont);
+        deleteItem.setFont(menuFont);
+        save.setFont(menuFont);
+
+        createItem.setPreferredSize(paddedSize);
+        deleteItem.setPreferredSize(paddedSize);
+        save.setPreferredSize(paddedSize);
 
         actionsMenu.add(createItem);
         actionsMenu.add(deleteItem);
@@ -134,10 +142,31 @@ public class JournalPanel extends JPanel {
         deleteItem.addActionListener(e -> deleteSelectedEntry());
         save.addActionListener(e -> saveJournal());
 
-        // show menu when actions button is clicked?
         actionsButton.addActionListener(e -> {
+            actionsMenu
+                    .setPreferredSize(new Dimension(actionsButton.getWidth(), actionsMenu.getPreferredSize().height));
             actionsMenu.show(actionsButton, 0, actionsButton.getHeight());
+            ;
+
+            actionsButton.setText("Actions ▲");
         });
+
+        actionsMenu.addPopupMenuListener(new PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                actionsButton.setText("Actions ▼");
+            }
+
+            @Override
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+            }
+
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {
+                actionsButton.setText("Actions ▼");
+            }
+        });
+
         return headerPanel;
     }
 

@@ -15,12 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import model.Journal;
-import model.JournalEntry;
 import persistence.JsonReader;
-import persistence.JsonWriter;
 
 public class BookshelfPanel extends JPanel {
     private JournalAppGUI mainApp;
@@ -40,7 +37,6 @@ public class BookshelfPanel extends JPanel {
 
     private void setupUI() {
         setLayout(new BorderLayout());
-        // TODO: this is not working - setting background color
         setBackground(Color.WHITE);
         setOpaque(true);
 
@@ -88,25 +84,18 @@ public class BookshelfPanel extends JPanel {
 
         // Buttons panel
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBackground(Color.WHITE); // TODO: super helpful to see what is what
+        buttonsPanel.setBackground(Color.WHITE); 
         buttonsPanel.setOpaque(true);
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 0));
         buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Create New Journal button
         ComicSansButton createButton = new ComicSansButton("Create new journal", Font.PLAIN, 20);
-        // TODO: we'll do button class later!! Focus on functionality first.
-        // createButton.setForeground(new Color(76, 176, 94));
-        // createButton.setBackground(new Color(195, 214, 200));
-        // createButton.setOpaque(true);
-        // createButton.setBorder(new LineBorder(new Color(76, 176, 94), 3, true));
-        // createButton.setMargin(new Insets(15, 15, 15, 15));
         createButton.addActionListener(e -> cardLayout.show(mainContainer, "CREATE"));
         buttonsPanel.add(createButton);
 
         // Open Existing Journal button
         ComicSansButton openButton = new ComicSansButton("Open existing journal", Font.PLAIN, 20);
-        // openButton.setBackground(new Color(255, 182, 193)); // Light pink
         openButton.addActionListener(e -> cardLayout.show(mainContainer, "OPEN"));
         buttonsPanel.add(openButton);
 
@@ -214,7 +203,6 @@ public class BookshelfPanel extends JPanel {
 
         loadJournalPanel.add(Box.createVerticalGlue());
 
-        // TODO: replace image
         ImageIcon rawLoadJournalImage = new ImageIcon("src/main/ui/screens/load-journal.png");
         Image scaledImage = rawLoadJournalImage.getImage().getScaledInstance(
                 (int) (rawLoadJournalImage.getIconWidth() / 1.4),
