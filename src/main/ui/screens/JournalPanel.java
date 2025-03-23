@@ -36,6 +36,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class JournalPanel extends JPanel {
     private JournalAppGUI mainApp;
@@ -110,10 +111,9 @@ public class JournalPanel extends JPanel {
 
         titleLabel = new JLabel("placeHolderText");
         titleLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
+        titleLabel.setForeground(new Color(68, 101, 233));
         headerPanel.add(titleLabel, BorderLayout.WEST);
 
-        // TODO: need to make it so that when the drop down is open... the text is
-        // "Actions ▲"
         actionsButton = new ComicSansButton("Actions ▼", Font.BOLD, 24);
         headerPanel.add(actionsButton, BorderLayout.EAST);
 
@@ -198,13 +198,13 @@ public class JournalPanel extends JPanel {
         boolean confirmed = dialog.showDialog();
 
         if (confirmed) {
-            // Delete the entry
+            // delete the entry
             currentJournal.deleteEntry(selectedEntry.getCreatedTime());
 
-            // Refresh the table
+            // refresh the table
             ((JournalEntriesTableModel) entriesTable.getModel()).refreshData();
 
-            // Update the view (show empty state if needed)
+            // update the view (show empty state if needed)
             updateView();
         }
     }
@@ -279,11 +279,35 @@ public class JournalPanel extends JPanel {
         entriesTable.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
         entriesTable.getTableHeader().setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 
+        TableColumnModel columnModel = entriesTable.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(100);
+        columnModel.getColumn(1).setPreferredWidth(400);
+        columnModel.getColumn(2).setPreferredWidth(100);
+
         // add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(entriesTable);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(20, 40, 40, 40));
         entriesTablePanel.add(scrollPane, BorderLayout.CENTER);
 
+        entriesTable.getTableHeader().setDefaultRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+
+                JLabel label = (JLabel) super.getTableCellRendererComponent(
+                        table, value, isSelected, hasFocus, row, column);
+
+                label.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+                label.setHorizontalAlignment(CENTER);
+                label.setOpaque(true);
+                label.setForeground(new Color(68, 101, 233));
+                label.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createMatteBorder(0, 0, 2, 0, (new Color(68, 101, 233))), // line
+                        BorderFactory.createEmptyBorder(10, 5, 10, 5) // padding
+                ));
+                return label;
+            }
+        });
         if (currentJournal != null) {
             ((JournalEntriesTableModel) entriesTable.getModel()).refreshData();
         }

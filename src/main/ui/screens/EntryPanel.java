@@ -192,6 +192,7 @@ public class EntryPanel extends JPanel {
 
         viewHeader = new JLabel(currentEntry == null ? "placeHolder" : currentEntry.getCreatedTime().toString());
         viewHeader.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+        viewHeader.setForeground(new Color(68, 101, 233));
         headerPanel.add(viewHeader, BorderLayout.WEST);
 
         ComicSansButton editButton = new ComicSansButton("Edit", Font.BOLD, 20);
