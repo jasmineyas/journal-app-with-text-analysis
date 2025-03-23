@@ -40,6 +40,7 @@ public class EntryPanel extends JPanel {
     private JLabel perspectiveLabel;
 
     private JLabel editModeHeader;
+    private JLabel viewHeader;
 
     public EntryPanel(JournalAppGUI mainApp) {
         this.mainApp = mainApp;
@@ -167,9 +168,9 @@ public class EntryPanel extends JPanel {
         headerPanel.setBackground(Color.RED);
         headerPanel.setOpaque(true);
 
-        JLabel header = new JLabel(currentEntry == null ? "placeHolder" : currentEntry.getCreatedTime().toString());
-        header.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-        headerPanel.add(header, BorderLayout.WEST);
+        viewHeader = new JLabel(currentEntry == null ? "placeHolder" : currentEntry.getCreatedTime().toString());
+        viewHeader.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+        headerPanel.add(viewHeader, BorderLayout.WEST);
 
         ComicSansButton editButton = new ComicSansButton("Edit", Font.BOLD, 20);
         editButton.addActionListener(e -> editEntry());
@@ -227,6 +228,7 @@ public class EntryPanel extends JPanel {
     // Update the view panel with current entry data
     private void updateViewPanel() {
         if (currentEntry != null) {
+            viewHeader.setText(currentEntry.getCreatedTime().toString());
             contentDisplay.setText(currentEntry.getContent());
             moodLabel.setText("Mood: " + currentEntry.getOverallMood());
             timeLabel.setText("Time orientation: " + currentEntry.getTimeOrientation());
