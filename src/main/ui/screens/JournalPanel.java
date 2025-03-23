@@ -83,7 +83,7 @@ public class JournalPanel extends JPanel {
         headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(Color.PINK);
         headerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
-        headerPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
 
         // TODO: this is hardcoded right now!! Need to put the actual data value in
         // here.
@@ -171,7 +171,7 @@ public class JournalPanel extends JPanel {
 
         // add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(entriesTable);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         entriesTablePanel.add(scrollPane, BorderLayout.CENTER);
 
         if (currentJournal != null) {
