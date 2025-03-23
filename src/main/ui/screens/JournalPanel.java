@@ -2,6 +2,7 @@ package ui.screens;
 
 import ui.*;
 import ui.smallComponents.ComicSansButton;
+import ui.smallComponents.ConfirmationDialog;
 import model.*;
 
 import java.awt.BorderLayout;
@@ -20,13 +21,16 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
 public class JournalPanel extends JPanel {
@@ -115,6 +119,9 @@ public class JournalPanel extends JPanel {
         actionsMenu.add(quit);
 
         createItem.addActionListener(e -> mainApp.showEntry(new JournalEntry(""), true));
+        deleteItem.addActionListener(e -> deleteSelectedEntry());
+        save.addActionListener(e -> saveJournal());
+        quit.addActionListener(e -> System.exit(0));
         // TODO: add other event listeners
 
         // show menu when actions button is clicked?
@@ -122,6 +129,56 @@ public class JournalPanel extends JPanel {
             actionsMenu.show(actionsButton, 0, actionsButton.getHeight());
         });
         return headerPanel;
+    }
+
+    private void deleteSelectedEntry() {
+        // Check if there's a selection
+        int selectedRow = entriesTable.getSelectedRow();
+        if (selectedRow == -1) {
+            // No selection, show a message
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please select an entry to delete.",
+                    "No selection",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Get the selected entry
+        JournalEntriesTableModel model = (JournalEntriesTableModel) entriesTable.getModel();
+        JournalEntry selectedEntry = model.entries.get(selectedRow);
+
+        // Show confirmation dialog
+        ConfirmationDialog dialog = new ConfirmationDialog(
+                (JFrame) SwingUtilities.getWindowAncestor(this),
+                "Confirm deletion",
+                "Are you sure you want to delete this journal entry?",
+                "Delete",
+                "Cancel");
+
+        boolean confirmed = dialog.showDialog();
+
+        if (confirmed) {
+            // Delete the entry
+            currentJournal.deleteEntry(selectedEntry.getCreatedTime());
+
+            // Refresh the table
+            ((JournalEntriesTableModel) entriesTable.getModel()).refreshData();
+
+            // Update the view (show empty state if needed)
+            updateView();
+        }
+    }
+
+    private void saveJournal() {
+        // TODO: Implement journal save functionality here
+        // This would typically involve serialization or database operations
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Journal saved successfully!",
+                "Save complete",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void updateHeader() {

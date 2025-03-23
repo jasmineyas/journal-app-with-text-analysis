@@ -2,6 +2,7 @@ package ui;
 
 import model.*;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -48,7 +49,7 @@ public class JournalAppGUI extends JFrame {
     }
 
     public void showJournal(Journal journal) {
-        this.currentJournal = journal; // TODO: mmm? why do we have this line here 
+        this.currentJournal = journal; // TODO: mmm? why do we have this line here
         journalPanel.setJournal(journal);
         cardLayout.show(mainPanel, "JOURNAL");
     }
