@@ -1,7 +1,7 @@
 package ui.screens;
 
 import ui.*;
-import ui.smallComponents.SimpleButton;
+import ui.smallComponents.ComicSansButton;
 import model.*;
 
 import java.awt.BorderLayout;
@@ -11,6 +11,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.datatransfer.FlavorListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class JournalPanel extends JPanel {
         headerPanel.add(titleLabel, BorderLayout.WEST);
 
         // TODO: need to update the icon here the downward rectangle....
-        actionsButton = new SimpleButton("Actions ▼", Font.BOLD, 24);
+        actionsButton = new ComicSansButton("Actions ▼", Font.BOLD, 24);
         headerPanel.add(actionsButton, BorderLayout.EAST);
 
         // TODO: need to add icon here... but let's see if this one works first.
@@ -100,8 +101,6 @@ public class JournalPanel extends JPanel {
         // TODO: also update the font
         actionsMenu = new JPopupMenu();
         JMenuItem createItem = new JMenuItem("Create");
-        // JMenuItem editItem = new JMenuItem("Edit");
-        // JMenuItem viewItem = new JMenuItem("View");
         JMenuItem deleteItem = new JMenuItem("Delete");
 
         JSeparator separator = new JSeparator();
@@ -110,16 +109,13 @@ public class JournalPanel extends JPanel {
         JMenuItem quit = new JMenuItem("Quit");
 
         actionsMenu.add(createItem);
-        // actionsMenu.add(editItem);
-        // actionsMenu.add(viewItem);
         actionsMenu.add(deleteItem);
         actionsMenu.add(separator);
         actionsMenu.add(save);
         actionsMenu.add(quit);
 
-        // TODO: add event listeners
-        // createItem.addActionListener(e -> createNewEntry());
-        // ....
+        createItem.addActionListener(e -> mainApp.showEntry(new JournalEntry(""), true));
+        // TODO: add other event listeners
 
         // show menu when actions button is clicked?
         actionsButton.addActionListener(e -> {
@@ -131,7 +127,7 @@ public class JournalPanel extends JPanel {
     public void updateHeader() {
         if (currentJournal != null) {
             titleLabel.setText(currentJournal.getName());
-        } 
+        }
     }
 
     private void createEmptyStatePanel() {
@@ -145,7 +141,8 @@ public class JournalPanel extends JPanel {
 
         // Image
         ImageIcon rawEmptyImage = new ImageIcon("src/main/ui/screens/empty-journal.png");
-        Image scaledImage = rawEmptyImage.getImage().getScaledInstance(872 / 2, 744 / 2, Image.SCALE_SMOOTH);
+        Image scaledImage = rawEmptyImage.getImage().getScaledInstance((int) (872 / 1.5), (int) (744 / 1.5),
+                Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         JLabel emptyImage = new JLabel(resizedIcon);
         emptyImage.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -188,8 +185,10 @@ public class JournalPanel extends JPanel {
                 if (e.getClickCount() == 2) {
                     int row = entriesTable.rowAtPoint(e.getPoint());
                     if (row >= 0) {
-                        JournalEntry entry = currentJournal.getAllEntries().get(row);
-                        mainApp.showEntry(entry);
+                        JournalEntriesTableModel model = (JournalEntriesTableModel) entriesTable.getModel();
+                        JournalEntry entry = model.entries.get(row);
+                        System.out.print("entry" + entry.getContent());
+                        mainApp.showEntry(entry, false);
                     }
                 }
             }

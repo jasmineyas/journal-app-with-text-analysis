@@ -1,8 +1,8 @@
 package ui.screens;
 
 import ui.*;
-import ui.smallComponents.SimpleButton;
-import ui.smallComponents.SimpleTextField;
+import ui.smallComponents.ComicSansButton;
+import ui.smallComponents.ComicSansTextField;
 
 import java.awt.*;
 
@@ -13,7 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import model.Journal;
 import model.JournalEntry;
@@ -90,7 +89,7 @@ public class BookshelfPanel extends JPanel {
         buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Create New Journal button
-        SimpleButton createButton = new SimpleButton("Create new journal", Font.PLAIN, 20);
+        ComicSansButton createButton = new ComicSansButton("Create new journal", Font.PLAIN, 20);
         // TODO: we'll do button class later!! Focus on functionality first.
         // createButton.setForeground(new Color(76, 176, 94));
         // createButton.setBackground(new Color(195, 214, 200));
@@ -101,7 +100,7 @@ public class BookshelfPanel extends JPanel {
         buttonsPanel.add(createButton);
 
         // Open Existing Journal button
-        SimpleButton openButton = new SimpleButton("Open existing journal", Font.PLAIN, 20);
+        ComicSansButton openButton = new ComicSansButton("Open existing journal", Font.PLAIN, 20);
         // openButton.setBackground(new Color(255, 182, 193)); // Light pink
         openButton.addActionListener(e -> cardLayout.show(mainContainer, "OPEN"));
         buttonsPanel.add(openButton);
@@ -130,10 +129,15 @@ public class BookshelfPanel extends JPanel {
         // Add some spacing at the top
         createJournalPanel.add(Box.createVerticalGlue());
 
-        // TODO: replace image
-        JLabel welcomeImage = new JLabel(new ImageIcon("src/main/ui/screens/welcome-screen.png"));
-        welcomeImage.setAlignmentX(Component.CENTER_ALIGNMENT);
-        createJournalPanel.add(welcomeImage);
+        ImageIcon rawNewJournalImage = new ImageIcon("src/main/ui/screens/new-journal.png");
+        Image scaledImage = rawNewJournalImage.getImage().getScaledInstance(
+                (int) (rawNewJournalImage.getIconWidth() / 1.1),
+                (int) (rawNewJournalImage.getIconHeight() / 1.1),
+                Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        JLabel emptyImage = new JLabel(resizedIcon);
+        emptyImage.setAlignmentX(Component.CENTER_ALIGNMENT);
+        createJournalPanel.add(emptyImage);
 
         createJournalPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
@@ -150,10 +154,10 @@ public class BookshelfPanel extends JPanel {
         inputPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         inputPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        SimpleTextField nameField = new SimpleTextField(20, 18, 200, 40);
+        ComicSansTextField nameField = new ComicSansTextField(20, 18, 200, 40);
         inputPanel.add(nameField);
 
-        SimpleButton createButton = new SimpleButton("Create", Font.PLAIN, 20);
+        ComicSansButton createButton = new ComicSansButton("Create", Font.PLAIN, 20);
         createButton.addActionListener(e -> {
             String journalName = nameField.getText().trim();
             if (!journalName.isEmpty()) {
@@ -191,9 +195,15 @@ public class BookshelfPanel extends JPanel {
         loadJournalPanel.add(Box.createVerticalGlue());
 
         // TODO: replace image
-        JLabel welcomeImage = new JLabel(new ImageIcon("src/main/ui/screens/welcome-screen.png"));
-        welcomeImage.setAlignmentX(Component.CENTER_ALIGNMENT);
-        loadJournalPanel.add(welcomeImage);
+        ImageIcon rawLoadJournalImage = new ImageIcon("src/main/ui/screens/load-journal.png");
+        Image scaledImage = rawLoadJournalImage.getImage().getScaledInstance(
+                (int) (rawLoadJournalImage.getIconWidth() / 1.3),
+                (int) (rawLoadJournalImage.getIconHeight() / 1.3),
+                Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        JLabel loadJournalImage = new JLabel(resizedIcon);
+        loadJournalImage.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loadJournalPanel.add(loadJournalImage);
 
         loadJournalPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
@@ -210,15 +220,15 @@ public class BookshelfPanel extends JPanel {
         inputPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         inputPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        SimpleTextField nameField = new SimpleTextField(20, 18, 200, 40);
+        ComicSansTextField nameField = new ComicSansTextField(20, 18, 200, 40);
         inputPanel.add(nameField);
         inputPanel.setBackground(Color.WHITE);
         inputPanel.setOpaque(true);
 
-        SimpleButton loadButton = new SimpleButton("Load", Font.PLAIN, 20);
+        ComicSansButton loadButton = new ComicSansButton("Load", Font.PLAIN, 20);
         loadButton.addActionListener(e -> {
             String journalName = nameField.getText().trim();
-            // TODO: add the code for loading a journal data; 
+            // TODO: add the code for loading a journal data;
             if (!journalName.isEmpty()) {
                 Journal journal = journalDataForTesting();
                 mainApp.showJournal(journal);

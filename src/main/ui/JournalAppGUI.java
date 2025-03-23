@@ -48,14 +48,15 @@ public class JournalAppGUI extends JFrame {
     }
 
     public void showJournal(Journal journal) {
-        this.currentJournal = journal;
+        this.currentJournal = journal; // TODO: mmm? why do we have this line here 
         journalPanel.setJournal(journal);
         cardLayout.show(mainPanel, "JOURNAL");
     }
 
-    public void showEntry(JournalEntry entry) {
-        this.currentEntry = entry;
-        entryPanel.setEntry(entry);
+    public void showEntry(JournalEntry entry, Boolean isNewEntry) {
+        // this.currentEntry = entry;
+        entryPanel.setEntry(entry, isNewEntry);
+        entryPanel.setJournal(this.currentJournal);
         cardLayout.show(mainPanel, "ENTRY");
     }
 
