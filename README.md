@@ -2,7 +2,7 @@
 # Journaling app with text analysis 
 Course project for CPSC 210 at the University of British Columbia 
 
-![alt text](image.png)
+![alt text](readmeImages/image.png)
 
 ## About the project
 
@@ -35,7 +35,7 @@ I understand that implementing a robust text analysis algorithm is ambitious, so
 ## Mock-up for GUI
 [Click here to view the design mock-ups for the app](https://www.tldraw.com/p/jFglMOsh4VRXvB9Vza7SG?d=v-292.1950.5431.3330.page). Used tldraw;. 
 
-![alt text](image-6.png)
+![alt text](readmeImages/image-6.png)
 
 ## User stories
 
@@ -62,18 +62,18 @@ I understand that implementing a robust text analysis algorithm is ambitious, so
 
 ## Instructions for End User (GUI)
 - You can generate the first required action related to the user story "adding multiple Xs to a Y" by creating and adding a new journal entry to the journal with the "create" button inside the action button drop down. 
-![alt text](image-8.png)
+![alt text](readmeImages/image-8.png)
 - You can generate the second required action related to the user story "adding multiple Xs to a Y" by viewing all the journal entries added on the journal page. 
-![alt text](image-9.png)
+![alt text](readmeImages/image-9.png)
 - You can generate the third required action related to the user story "adding multiple Xs to a Y" by deleting a selected journal entry to the journal with the "delete" button inside the action button drop down. 
-![alt text](image-10.png)
+![alt text](readmeImages/image-10.png)
 - You can locate my visual component on welcome screen, create new journal screen, load journal screen, as well as empty journal screen and view journal entry screen.  
-![alt text](image-11.png)
+![alt text](readmeImages/image-11.png)
 - You can save the state of my application by selecting the "save" button inside the action button drop down. 
-![alt text](image-12.png)
-![alt text](image-13.png)
+![alt text](readmeImages/image-12.png)
+![alt text](readmeImages/image-13.png)
 - You can reload the state of my application by selecting loading an existing journal on the welcome screen and inputting the name of the journal you are looking for in the journal name input. 
-![alt text](image-14.png)
+![alt text](readmeImages/image-14.png)
 
 ## Thoughts dump (user stories)
 - Relying on the user's computer security control so i am not thinking about adding password protection. Assuming that the user will keep their laptop secure. However, password-control could be added if there's time. 
