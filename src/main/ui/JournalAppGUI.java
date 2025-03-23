@@ -27,6 +27,7 @@ public class JournalAppGUI extends JFrame {
         setTitle("Simple journal app"); // we can get creative here later
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1200, 800);
+        setLocationRelativeTo(null);
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);

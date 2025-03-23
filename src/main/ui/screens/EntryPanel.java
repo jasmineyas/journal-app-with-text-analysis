@@ -131,9 +131,10 @@ public class EntryPanel extends JPanel {
         editPanel.add(headerPanel, BorderLayout.NORTH);
 
         contentEditArea = new JTextArea(600, 350);
-        contentEditArea.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+        contentEditArea.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
         contentEditArea.setLineWrap(true);
         contentEditArea.setWrapStyleWord(true);
+        contentEditArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JScrollPane scrollPane = new JScrollPane(contentEditArea);
         scrollPane.setPreferredSize(new Dimension(500, 300));

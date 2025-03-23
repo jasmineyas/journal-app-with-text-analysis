@@ -4,6 +4,7 @@ import ui.*;
 import ui.smallComponents.ComicSansButton;
 import ui.smallComponents.ConfirmationDialog;
 import model.*;
+import persistence.JsonWriter;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -13,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.datatransfer.FlavorListener;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,14 +167,28 @@ public class JournalPanel extends JPanel {
     }
 
     private void saveJournal() {
-        // TODO: Implement journal save functionality here
-        // This would typically involve serialization or database operations
+        try {
 
-        JOptionPane.showMessageDialog(
-                this,
-                "Journal saved successfully!",
-                "Save complete",
-                JOptionPane.INFORMATION_MESSAGE);
+            String jsonStore = "data/userData/" + currentJournal.getName() + ".json";
+            JsonWriter jsonWriter = new JsonWriter(jsonStore);
+            jsonWriter.open();
+            jsonWriter.write(currentJournal);
+            jsonWriter.close();
+            System.out.println("Saved" + " journal: " + currentJournal.getName() + " to '" + jsonStore + "'");
+            JOptionPane.showMessageDialog(
+                    this,
+                    ("Saved" + " journal: " + currentJournal.getName() + " to '" + jsonStore
+                            + "'"),
+                    "Save complete",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "\"Unable to write to file: \" + jsonStore)",
+                    "Path not found",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     public void updateHeader() {

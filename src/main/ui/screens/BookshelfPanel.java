@@ -5,6 +5,7 @@ import ui.smallComponents.ComicSansButton;
 import ui.smallComponents.ComicSansTextField;
 
 import java.awt.*;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -12,10 +13,14 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import model.Journal;
 import model.JournalEntry;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 public class BookshelfPanel extends JPanel {
     private JournalAppGUI mainApp;
@@ -161,7 +166,6 @@ public class BookshelfPanel extends JPanel {
         createButton.addActionListener(e -> {
             String journalName = nameField.getText().trim();
             if (!journalName.isEmpty()) {
-                // TODO: here's where we create a new journal
                 Journal newJournal = new Journal(journalName);
                 mainApp.showJournal(newJournal);
             }
@@ -228,10 +232,18 @@ public class BookshelfPanel extends JPanel {
         ComicSansButton loadButton = new ComicSansButton("Load", Font.PLAIN, 20);
         loadButton.addActionListener(e -> {
             String journalName = nameField.getText().trim();
-            // TODO: add the code for loading a journal data;
             if (!journalName.isEmpty()) {
-                Journal journal = journalDataForTesting();
-                mainApp.showJournal(journal);
+                String jsonStore = "data/userData/" + journalName + ".json";
+                JsonReader jsonReader = new JsonReader(jsonStore);
+                try {
+                    Journal journal = jsonReader.read();
+                    System.out.println("Loaded " + journal.getName() + "from" + jsonStore);
+                    mainApp.showJournal(journal);
+                } catch (IOException error) {
+                    JOptionPane.showMessageDialog(null,
+                            "File not found. Please check for typo or create a new file.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         inputPanel.add(loadButton);
@@ -239,13 +251,4 @@ public class BookshelfPanel extends JPanel {
         loadJournalPanel.add(inputPanel);
         loadJournalPanel.add(Box.createVerticalGlue());
     }
-
-    private Journal journalDataForTesting() {
-        JournalEntry entry = new JournalEntry("Hello, world!");
-        Journal journal = new Journal("Jasmine's journal");
-        journal.createNewEntry(entry);
-        System.out.print(journal.formatAllEntries());
-        return journal;
-    }
-
 }
