@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.Journal;
+import model.JournalEntry;
 
 public class BookshelfPanel extends JPanel {
     private JournalAppGUI mainApp;
@@ -29,7 +30,6 @@ public class BookshelfPanel extends JPanel {
 
     public BookshelfPanel(JournalAppGUI mainApp) {
         this.mainApp = mainApp;
-
         setupUI();
 
     }
@@ -84,7 +84,7 @@ public class BookshelfPanel extends JPanel {
 
         // Buttons panel
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBackground(Color.RED); // TODO: super helpful to see what is what 
+        buttonsPanel.setBackground(Color.RED); // TODO: super helpful to see what is what
         buttonsPanel.setOpaque(true);
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 0));
         buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -112,7 +112,7 @@ public class BookshelfPanel extends JPanel {
 
     private void setupCreateJournalPanel() {
         createJournalPanel = new JPanel();
-        createJournalPanel.setBackground(Color.BLUE);
+        createJournalPanel.setBackground(Color.PINK);
         createJournalPanel.setOpaque(true);
         createJournalPanel.setLayout(new BoxLayout(createJournalPanel, BoxLayout.Y_AXIS));
         createJournalPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -157,7 +157,7 @@ public class BookshelfPanel extends JPanel {
         createButton.addActionListener(e -> {
             String journalName = nameField.getText().trim();
             if (!journalName.isEmpty()) {
-                // TODO: create new journal + that screen
+                // TODO: here's where we create a new journal
                 Journal newJournal = new Journal(journalName);
                 mainApp.showJournal(newJournal);
             }
@@ -218,16 +218,24 @@ public class BookshelfPanel extends JPanel {
         SimpleButton loadButton = new SimpleButton("Load", Font.PLAIN, 20);
         loadButton.addActionListener(e -> {
             String journalName = nameField.getText().trim();
-            // if (!journalName.isEmpty()) {
-            // TODO: load the journal from data
-            // Journal journal = new Journal(journalName);
-            // mainApp.showJournal(journal);
-            // }
+            // TODO: add the code for loading a journal data; 
+            if (!journalName.isEmpty()) {
+                Journal journal = journalDataForTesting();
+                mainApp.showJournal(journal);
+            }
         });
         inputPanel.add(loadButton);
 
         loadJournalPanel.add(inputPanel);
         loadJournalPanel.add(Box.createVerticalGlue());
+    }
+
+    private Journal journalDataForTesting() {
+        JournalEntry entry = new JournalEntry("Hello, world!");
+        Journal journal = new Journal("Jasmine's journal");
+        journal.createNewEntry(entry);
+        System.out.print(journal.formatAllEntries());
+        return journal;
     }
 
 }
