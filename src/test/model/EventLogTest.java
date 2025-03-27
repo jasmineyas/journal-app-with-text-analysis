@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Unit tests for the EventLog class
  */
+
 public class EventLogTest {
     private Event e1;
     private Event e2;

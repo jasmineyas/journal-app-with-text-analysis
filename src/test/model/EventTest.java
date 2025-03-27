@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Unit tests for the Event class
  */
+
 public class EventTest {
     private Event e;
     private Date d;
