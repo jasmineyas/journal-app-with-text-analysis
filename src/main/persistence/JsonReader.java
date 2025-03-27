@@ -1,6 +1,8 @@
 package persistence;
 
 import model.JournalEntry;
+import model.EventLog;
+import model.Event;
 import model.Journal;
 
 import java.io.IOException;
@@ -49,7 +51,7 @@ public class JsonReader {
     // EFFECTS: parses journal from JSON object and returns it
     private Journal parseJournal(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        Journal journal = new Journal(name);
+        Journal journal = new Journal(name, true);
         addJournalEntries(journal, jsonObject);
         return journal;
     }
@@ -75,6 +77,6 @@ public class JsonReader {
         JournalEntry entry = new JournalEntry(content);
         entry.setCreatedTime(createdTime);
         entry.setLastUpdatedTime(lastupdatedTime);
-        journal.createNewEntry(entry);
+        journal.createNewEntry(entry, true);
     }
 }

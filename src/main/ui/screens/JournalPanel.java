@@ -347,7 +347,7 @@ public class JournalPanel extends JPanel {
                     if (row >= 0) {
                         JournalEntriesTableModel model = (JournalEntriesTableModel) entriesTable.getModel();
                         JournalEntry entry = model.entries.get(row);
-                        System.out.print("entry" + entry.getContent());
+                        // System.out.print("entry" + entry.getContent());
                         mainApp.showEntry(entry, false);
                     }
                 }
@@ -366,11 +366,11 @@ public class JournalPanel extends JPanel {
         public void refreshData() {
             if (currentJournal != null) {
                 entries = new ArrayList<>(currentJournal.getAllEntries().values());
-                System.out.println("Table model refreshed. Entry count: " + entries.size());
+                // System.out.println("Table model refreshed. Entry count: " + entries.size());
                 // Thread.dumpStack();
             } else {
                 entries.clear();
-                System.out.println("Table model refreshed with NULL journal");
+                // System.out.println("Table model refreshed with NULL journal");
                 // Thread.dumpStack();
             }
             fireTableDataChanged();

@@ -1,6 +1,7 @@
 package ui;
 
 import model.*;
+import model.Event;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,9 +11,11 @@ import ui.screens.EntryPanel;
 import ui.screens.JournalPanel;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
- * JournalAppGUI class is the main GUI class for the journal app. 
+ * JournalAppGUI class is the main GUI class for the journal app.
  */
 
 public class JournalAppGUI extends JFrame {
@@ -27,8 +30,9 @@ public class JournalAppGUI extends JFrame {
     private JournalEntry currentEntry;
 
     public JournalAppGUI() {
-        setTitle("Simple journal app"); // we can get creative here later
+        setTitle("Comic sans journal app"); // we can get creative here later
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        handleWindowClosing();
         setSize(1200, 800);
         setLocationRelativeTo(null);
 
@@ -48,11 +52,28 @@ public class JournalAppGUI extends JFrame {
 
     }
 
+    // EFFECTS: print out event log when the app window is closed
+    public void handleWindowClosing() {
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.out.println(" ======================= SESSION EVENT LOG =======================");
+                if (EventLog.getInstance().iterator().hasNext()){
+                    for (Event event : EventLog.getInstance()) {
+                        System.out.println(event.toString());
+                    }
+                } else {
+                    System.out.println("\n No user events were executed.\n");
+                }
+                System.out.println(" ========================== END OF LOG ===========================");
+            }
+        });
+    }
+
     // Effects: shows the bookshelf panel
     public void showBookshelf() {
         cardLayout.show(mainPanel, "BOOKSHELF");
     }
-    
+
     // Effects: shows the journal panel and sets the current journal
     // Modifies: this
     public void showJournal(Journal journal) {

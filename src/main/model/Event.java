@@ -5,6 +5,7 @@ import java.util.Date;
 
 /**
  * Represents a user event.
+ * code reference: https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
  */
 
 public class Event {
@@ -62,6 +63,6 @@ public class Event {
 
     @Override
     public String toString() {
-        return dateLogged.toString() + "\n" + description;
+        return dateLogged.toString() + "\n\t" + description;
     }
 }

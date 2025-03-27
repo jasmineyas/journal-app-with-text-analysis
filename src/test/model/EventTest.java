@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit tests for the Event class
+ * code reference: https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
  */
 
 public class EventTest {
