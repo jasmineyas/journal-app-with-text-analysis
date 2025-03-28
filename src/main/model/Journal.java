@@ -26,7 +26,6 @@ public class Journal implements Writable {
                 new Event("Created new journal with name [" + name + "]"));
     }
 
-    // TODO: add a test and refactor the other load
     public Journal(String name, Boolean isLoaded) {
         this.name = name;
         journalEntries = new HashMap<>();
@@ -53,8 +52,6 @@ public class Journal implements Writable {
                 .logEvent(new Event("Created a new entry with preview of [" + entry.getEntryPreview() + "]"));
         return true;
     }
-
-    // TODO: add tests for this method 
 
     // REQUIRE: the entry doesn't exist already
     // MODIFY: this
