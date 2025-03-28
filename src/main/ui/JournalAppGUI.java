@@ -27,7 +27,7 @@ public class JournalAppGUI extends JFrame {
     private EntryPanel entryPanel;
 
     private Journal currentJournal;
-    private JournalEntry currentEntry;
+    // private JournalEntry currentEntry;
 
     public JournalAppGUI() {
         setTitle("Comic sans journal app"); // we can get creative here later

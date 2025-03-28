@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 
 public class EventTest {
-    private Event e;
-    private Date d;
+    private Event event;
+    private Date date;
 
     // NOTE: these tests might fail if time at which line (2) below is executed
     // is different from time that line (1) is executed. Lines (1) and (2) must
@@ -24,16 +24,16 @@ public class EventTest {
 
     @BeforeEach
     public void runBefore() {
-        e = new Event("User created a new entry"); // (1)
-        d = Calendar.getInstance().getTime(); // (2)
+        event = new Event("User created a new entry"); // (1)
+        date = Calendar.getInstance().getTime(); // (2)
     }
 
     @Test
     public void testEvent() {
-        assertEquals("User created a new entry", e.getDescription());
+        assertEquals("User created a new entry", event.getDescription());
         // assertEquals(d, e.getDate());
-        Date actualDate = e.getDate();
-        Date expectedDate = d; 
+        Date actualDate = event.getDate();
+        Date expectedDate = date; 
         double buffer = 1000;
         double difference = Math.abs(actualDate.getTime() - expectedDate.getTime());
         assertTrue(difference <= buffer);
@@ -41,6 +41,6 @@ public class EventTest {
 
     @Test
     public void testToString() {
-        assertEquals(d.toString() + "\n\t" + "User created a new entry", e.toString());
+        assertEquals(date.toString() + "\n\t" + "User created a new entry", event.toString());
     }
 }
