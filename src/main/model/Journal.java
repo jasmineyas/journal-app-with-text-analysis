@@ -26,7 +26,7 @@ public class Journal implements Writable {
                 new Event("Created new journal with name [" + name + "]"));
     }
 
-    // TODO: add a test and refactor the other load 
+    // TODO: add a test and refactor the other load
     public Journal(String name, Boolean isLoaded) {
         this.name = name;
         journalEntries = new HashMap<>();
@@ -54,8 +54,7 @@ public class Journal implements Writable {
         return true;
     }
 
-    // TODO: add tests 
-    // TODO: add save and write logging as well :D 
+    // TODO: add tests for this method 
 
     // REQUIRE: the entry doesn't exist already
     // MODIFY: this
@@ -73,14 +72,13 @@ public class Journal implements Writable {
         return true;
     }
 
-    
-
     // REQUIRE: the entry exists in the list and newContent is not empty
     // MODIFY: this
     // EFFECTS: update an existing entry content
     public void updateEntry(JournalEntry entry, String newContent) {
         journalEntries.get(entry.getCreatedTime()).editContent(newContent);
-        EventLog.getInstance().logEvent(new Event("Edited journal entry - new preview is [" + entry.getEntryPreview() + "]"));
+        EventLog.getInstance().logEvent(
+                new Event("Edited journal entry - new preview is [" + entry.getEntryPreview() + "]"));
     }
 
     // REQUIRE: this entry exists in the journal

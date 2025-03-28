@@ -57,7 +57,7 @@ public class JournalAppGUI extends JFrame {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.out.println(" ======================= SESSION EVENT LOG =======================");
-                if (EventLog.getInstance().iterator().hasNext()){
+                if (EventLog.getInstance().iterator().hasNext()) {
                     for (Event event : EventLog.getInstance()) {
                         System.out.println(event.toString());
                     }

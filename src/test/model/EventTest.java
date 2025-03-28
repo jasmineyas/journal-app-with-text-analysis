@@ -41,6 +41,6 @@ public class EventTest {
 
     @Test
     public void testToString() {
-        assertEquals(d.toString() + "\n" + "User created a new entry", e.toString());
+        assertEquals(d.toString() + "\n\t" + "User created a new entry", e.toString());
     }
 }

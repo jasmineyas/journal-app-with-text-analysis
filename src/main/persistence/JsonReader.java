@@ -1,8 +1,6 @@
 package persistence;
 
 import model.JournalEntry;
-import model.EventLog;
-import model.Event;
 import model.Journal;
 
 import java.io.IOException;

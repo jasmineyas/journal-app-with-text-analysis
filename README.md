@@ -75,6 +75,38 @@ I understand that implementing a robust text analysis algorithm is ambitious, so
 - You can reload the state of my application by selecting loading an existing journal on the welcome screen and inputting the name of the journal you are looking for in the journal name input. 
 ![alt text](readmeImages/image-14.png)
 
+## Phase 4: Task 2
+Here's a representative sample of the events that occur when my app runs: 
+
+```
+ ======================= SESSION EVENT LOG =======================
+Thu Mar 27 13:58:59 PDT 2025
+        Created new journal with name [Kieran's diary]
+Thu Mar 27 13:59:18 PDT 2025
+        Created a new entry with preview of [I feel unjust for the world. I am sad today....]
+Thu Mar 27 13:59:24 PDT 2025
+        Edited journal entry - new preview is [I feel unjust for the world. I am sad today....]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal with name [Little dog's journal]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [Sun coming through the window woke me up! My human...]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [this is a new entry! :) ]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [Something woke me up after dark. A noise outside made...]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [Napped ALL morning after my human left. The house feels...]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [Woke up when the sun was just peeking through the...]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [oh i see they are not sorted!]
+Thu Mar 27 13:59:44 PDT 2025
+        Deleted an entry with preview of [this is a new entry! :) ]
+Thu Mar 27 13:59:46 PDT 2025
+        Saved journal with name [Little dog's journal]
+ ========================== END OF LOG ===========================
+ ```
+
 ## Thoughts dump (user stories)
 - Relying on the user's computer security control so i am not thinking about adding password protection. Assuming that the user will keep their laptop secure. However, password-control could be added if there's time. 
 - Relying on the user's operating system for quick-hide functionality (quickly hide away the application). For example, on mac, users can use command-H to quickly hide the active application.  
