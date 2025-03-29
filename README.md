@@ -108,11 +108,14 @@ Thu Mar 27 13:59:46 PDT 2025
  ```
 
 ## Phase 4: Task 3
-Reflect on the design presented in your UML class diagram. 
-If you had more time to work on the project, what refactoring might you use to improve your design?  
-(Everyone can find something. It's fine if it's a tradeoff and not a strict improvement!) 
-In 1-2 paragraphs in this section of your README, describe the refactoring and your reasons for it.  
-You do not need to perform the refactoring - just identify the changes you would make if you had more time.  Keep in mind that refactoring does not mean adding more features to your application.
+- I would like to apply Model-View-Controller design pattern to my project. Currently, there are model and view layers. Adding a Controller, which acts as an intermediary between model and view, processes user input from the view, updates the model based on those inputs, and determines which view should be displayed would create better separation of concerns, and make the code more organized and easier to maintain.
+- There are a lot of duplicated UI components and code that I use. I think it would benefit a lot from making them into re-usable classes, or extracting that code into reusable methods. For example, multiple screens have a "Back" button, so creating a ```BackButtonPanel``` could be useful, or a ```HeaderPanel```. Another example is creating a ```createScaledImageLabel``` to scale images as I repeat the logic a couple times. 
+- I have some very long methods in all three main panels (e.g. ```createEditPanel()```, ```createViewPanel()```), which I think I should refactor them into their own classes and call them in their responsible panels (e.g.```entryPanel```). 
+- I would like to use  ```GridBagLayout``` for a lot of UI design that I am currently relying on with ```BagLayout``` and ```BoarderLayout```. 
+- Improve naming to improve code readability. 
+- Extract repeated values like font sizes, colors and dimensions into a config class or constants. 
+
+
 
 ## Thoughts dump (user stories)
 - Relying on the user's computer security control so i am not thinking about adding password protection. Assuming that the user will keep their laptop secure. However, password-control could be added if there's time. 
