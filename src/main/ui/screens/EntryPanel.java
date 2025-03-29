@@ -45,10 +45,10 @@ public class EntryPanel extends JPanel {
 
     private JTextArea contentEditArea;
     private JTextArea contentDisplay;
-    private JLabel moodLabel;
-    private JLabel timeLabel;
-    private JLabel senseLabel;
-    private JLabel perspectiveLabel;
+    private ComicSansLabel moodLabel;
+    private ComicSansLabel timeLabel;
+    private ComicSansLabel senseLabel;
+    private ComicSansLabel perspectiveLabel;
 
     private JLabel editModeHeader;
     private JLabel viewHeader;

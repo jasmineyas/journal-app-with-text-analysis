@@ -107,6 +107,13 @@ Thu Mar 27 13:59:46 PDT 2025
  ========================== END OF LOG ===========================
  ```
 
+## Phase 4: Task 3
+Reflect on the design presented in your UML class diagram. 
+If you had more time to work on the project, what refactoring might you use to improve your design?  
+(Everyone can find something. It's fine if it's a tradeoff and not a strict improvement!) 
+In 1-2 paragraphs in this section of your README, describe the refactoring and your reasons for it.  
+You do not need to perform the refactoring - just identify the changes you would make if you had more time.  Keep in mind that refactoring does not mean adding more features to your application.
+
 ## Thoughts dump (user stories)
 - Relying on the user's computer security control so i am not thinking about adding password protection. Assuming that the user will keep their laptop secure. However, password-control could be added if there's time. 
 - Relying on the user's operating system for quick-hide functionality (quickly hide away the application). For example, on mac, users can use command-H to quickly hide the active application.  
