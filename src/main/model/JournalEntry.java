@@ -51,6 +51,7 @@ public class JournalEntry implements Writable {
         this.lastUpdatedTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
         this.preview = createEntryPreview();
         analyze();
+        EventLog.getInstance().logEvent(new Event("Edited journal entry - new preview is [" + preview + "]"));
     }
 
     // MODIFIES: this

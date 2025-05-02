@@ -29,6 +29,39 @@ public class JournalTest {
     }
 
     @Test
+    void testJournalConstructorWithIsLoaded() {
+        Journal loadedJournal = new Journal("Test Journal", true);
+        assertEquals("Test Journal", loadedJournal.getName());
+        assertEquals(0, loadedJournal.getNumberOfEntries());
+
+        Journal newJournal = new Journal("Another Journal", false);
+        assertEquals("Another Journal", newJournal.getName());
+        assertEquals(0, newJournal.getNumberOfEntries());
+    }
+
+    @Test
+    void testCreateNewEntryWithIsLoadedTrue() {
+        assertTrue(journal.createNewEntry(entry, true));
+        assertEquals(1, journal.getNumberOfEntries());
+        assertEquals(entry, journal.getEntry(entry.getCreatedTime()));
+
+        assertFalse(journal.createNewEntry(entry, true));
+        assertEquals(1, journal.getNumberOfEntries());
+    }
+
+    @Test
+    void testCreateNewEntryWithIsLoadedFalse() {
+        assertTrue(journal.createNewEntry(entry, false));
+        assertEquals(1, journal.getNumberOfEntries());
+
+        assertTrue(journal.createNewEntry(entry2, false));
+        assertEquals(2, journal.getNumberOfEntries());
+
+        assertFalse(journal.createNewEntry(entryFail, false));
+        assertEquals(2, journal.getNumberOfEntries());
+    }
+
+    @Test
     void testCreateNewEntryOnce() {
         assertTrue(journal.createNewEntry(entry));
         assertEquals(1, journal.getNumberOfEntries());

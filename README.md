@@ -75,6 +75,48 @@ I understand that implementing a robust text analysis algorithm is ambitious, so
 - You can reload the state of my application by selecting loading an existing journal on the welcome screen and inputting the name of the journal you are looking for in the journal name input. 
 ![alt text](readmeImages/image-14.png)
 
+## Phase 4: Task 2
+Here's a representative sample of the events that occur when my app runs: 
+
+```
+ ======================= SESSION EVENT LOG =======================
+Thu Mar 27 13:58:59 PDT 2025
+        Created new journal with name [Kieran's diary]
+Thu Mar 27 13:59:18 PDT 2025
+        Created a new entry with preview of [I feel unjust for the world. I am sad today....]
+Thu Mar 27 13:59:24 PDT 2025
+        Edited journal entry - new preview is [I feel unjust for the world. I am sad today....]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal with name [Little dog's journal]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [Sun coming through the window woke me up! My human...]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [this is a new entry! :) ]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [Something woke me up after dark. A noise outside made...]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [Napped ALL morning after my human left. The house feels...]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [Woke up when the sun was just peeking through the...]
+Thu Mar 27 13:59:34 PDT 2025
+        Loaded a journal entry with name [oh i see they are not sorted!]
+Thu Mar 27 13:59:44 PDT 2025
+        Deleted an entry with preview of [this is a new entry! :) ]
+Thu Mar 27 13:59:46 PDT 2025
+        Saved journal with name [Little dog's journal]
+ ========================== END OF LOG ===========================
+ ```
+
+## Phase 4: Task 3
+- I would like to apply Model-View-Controller design pattern to my project. Currently, there are model and view layers. Adding a Controller, which acts as an intermediary between model and view, processes user input from the view, updates the model based on those inputs, and determines which view should be displayed would create better separation of concerns, and make the code more organized and easier to maintain.
+- There are a lot of duplicated UI components and code that I use. I think it would benefit a lot from making them into re-usable classes, or extracting that code into reusable methods. For example, multiple screens have a "Back" button, so creating a ```BackButtonPanel``` could be useful, or a ```HeaderPanel```. Another example is creating a ```createScaledImageLabel``` to scale images as I repeat the logic a couple times. 
+- I have some very long methods in all three main panels (e.g. ```createEditPanel()```, ```createViewPanel()```), which I think I should refactor them into their own classes and call them in their responsible panels (e.g.```entryPanel```). 
+- I would like to use  ```GridBagLayout``` for a lot of UI design that I am currently relying on with ```BagLayout``` and ```BoarderLayout```. 
+- Improve naming to improve code readability. 
+- Extract repeated values like font sizes, colors and dimensions into a config class or constants. 
+
+
+
 ## Thoughts dump (user stories)
 - Relying on the user's computer security control so i am not thinking about adding password protection. Assuming that the user will keep their laptop secure. However, password-control could be added if there's time. 
 - Relying on the user's operating system for quick-hide functionality (quickly hide away the application). For example, on mac, users can use command-H to quickly hide the active application.  

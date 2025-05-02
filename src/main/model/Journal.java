@@ -22,6 +22,17 @@ public class Journal implements Writable {
     public Journal(String name) {
         this.name = name;
         journalEntries = new HashMap<>();
+        EventLog.getInstance().logEvent(
+                new Event("Created new journal with name [" + name + "]"));
+    }
+
+    public Journal(String name, Boolean isLoaded) {
+        this.name = name;
+        journalEntries = new HashMap<>();
+        if (isLoaded) {
+            EventLog.getInstance().logEvent(
+                    new Event("Loaded a journal with name [" + name + "]"));
+        }
     }
 
     public String getName() {
@@ -37,6 +48,24 @@ public class Journal implements Writable {
             return false;
         }
         journalEntries.put(entry.getCreatedTime(), entry);
+        EventLog.getInstance()
+                .logEvent(new Event("Created a new entry with preview of [" + entry.getEntryPreview() + "]"));
+        return true;
+    }
+
+    // REQUIRE: the entry doesn't exist already
+    // MODIFY: this
+    // EFFECTS: create an new entry from a loaded file, return True it is created,
+    // returns False if it already exists
+    public boolean createNewEntry(JournalEntry entry, Boolean isLoaded) {
+        if (journalEntries.containsKey(entry.getCreatedTime())) {
+            return false;
+        }
+        journalEntries.put(entry.getCreatedTime(), entry);
+        if (isLoaded) {
+            EventLog.getInstance().logEvent(
+                    new Event("Loaded a journal entry with name [" + entry.getEntryPreview() + "]"));
+        }
         return true;
     }
 
@@ -45,6 +74,8 @@ public class Journal implements Writable {
     // EFFECTS: update an existing entry content
     public void updateEntry(JournalEntry entry, String newContent) {
         journalEntries.get(entry.getCreatedTime()).editContent(newContent);
+        EventLog.getInstance().logEvent(
+                new Event("Edited journal entry - new preview is [" + entry.getEntryPreview() + "]"));
     }
 
     // REQUIRE: this entry exists in the journal
@@ -55,6 +86,9 @@ public class Journal implements Writable {
         if (!journalEntries.containsKey(dateTime)) {
             return false;
         }
+
+        EventLog.getInstance().logEvent(
+                new Event("Deleted an entry with preview of [" + getEntry(dateTime).getEntryPreview() + "]"));
         journalEntries.remove(dateTime);
         return true;
     }
@@ -67,7 +101,8 @@ public class Journal implements Writable {
         return deleteEntry(dateTime);
     }
 
-    // (I don't care about last updated date yet - could add in the future - added in GUI not console) 
+    // (I don't care about last updated date yet - could add in the future - added
+    // in GUI not console)
     // EFFECTS: Returns all entries formatted in date time - entry preview format
     public String formatAllEntries() {
         StringBuilder entries = new StringBuilder();
